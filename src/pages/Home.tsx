@@ -7,8 +7,8 @@ import { RiLeafLine } from "react-icons/ri";
 
 export default function Home() { //add Login Modul, Hoover effect
   return (
-    <>
-     <nav className="nav">
+    <>    
+     <nav className="nav">      
       <div className="nav__wrapper">
         <figure className="nav__img--mask">
           <img className="nav__img" src="/assets/logo.png" alt="logo" />
@@ -18,7 +18,7 @@ export default function Home() { //add Login Modul, Hoover effect
           <li className="nav__list nav__list--mobile">About</li>
           <li className="nav__list nav__list--mobile">Contact</li>
           <li className="nav__list nav__list--mobile">Help</li>
-        </ul>
+        </ul>        
       </div>
     </nav>
     <section id="landing">

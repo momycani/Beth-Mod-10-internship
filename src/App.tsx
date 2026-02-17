@@ -11,9 +11,9 @@ import Settings from "./pages/Settings";
 import Library from "./pages/Library"; 
 
 export default function App() {
-  return (
+  return (    
     <Routes>
-      <Route path="/" element={<Home />} /> 
+      <Route path="/" element={<Home />} />       
       <Route path="/for-you" element={<ForYou />} />
       <Route path="/book/:id" element={<Book />} />
       <Route path="/player/:id" element={<Player />} />
@@ -21,7 +21,7 @@ export default function App() {
       <Route path="/settings" element={<Settings />} />
       <Route path="/library" element={<Library />} />
       <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+    </Routes>    
   );
 }
 
