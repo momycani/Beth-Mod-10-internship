@@ -13,7 +13,7 @@ import Library from "./pages/Library";
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} /> // working on
+      <Route path="/" element={<Home />} /> 
       <Route path="/for-you" element={<ForYou />} />
       <Route path="/book/:id" element={<Book />} />
       <Route path="/player/:id" element={<Player />} />
