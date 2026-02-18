@@ -5,7 +5,14 @@ import { BsStarFill, BsStarHalf } from "react-icons/bs";
 import { BiCrown } from "react-icons/bi";
 import { RiLeafLine } from "react-icons/ri";
 
-export default function Home() { //add Login Modul, Hoover effect
+interface HomeProps {
+  onLoginClick: () => void;
+}
+
+const headingClass =
+  "statistics__heading hover:text-emerald-500 transition-colors duration-300 cursor-pointer";
+
+export default function Home({ onLoginClick }: HomeProps) { 
   return (
     <>    
      <nav className="nav">      
@@ -14,7 +21,7 @@ export default function Home() { //add Login Modul, Hoover effect
           <img className="nav__img" src="/assets/logo.png" alt="logo" />
         </figure>
         <ul className="nav__list--wrapper">
-          <li className="nav__list nav__list--login">Login</li>
+          <li className="nav__list nav__list--login" onClick={onLoginClick}>Login</li>
           <li className="nav__list nav__list--mobile">About</li>
           <li className="nav__list nav__list--mobile">Contact</li>
           <li className="nav__list nav__list--mobile">Help</li>
@@ -37,7 +44,7 @@ export default function Home() { //add Login Modul, Hoover effect
                 <br className="remove--tablet" />
                 and even people who don’t like to read.
               </div>
-              <button className="btn home__cta--btn">Login</button>
+              <button className="btn home__cta--btn" onClick={onLoginClick}>Login</button>
             </div>
             <figure className="landing__image--mask">
               <img src="/assets/landing.png" alt="landing" />
@@ -81,16 +88,12 @@ export default function Home() { //add Login Modul, Hoover effect
           </div>
           <div className="statistics__wrapper">
             <div className="statistics__content--header">
-              <div className="statistics__heading">Enhance your knowledge</div>
-              <div className="statistics__heading">Achieve greater success</div>
-              <div className="statistics__heading">Improve your health</div>
-              <div className="statistics__heading">
-                Develop better parenting skills
-              </div>
-              <div className="statistics__heading">Increase happiness</div>
-              <div className="statistics__heading">
-                Be the best version of yourself!
-              </div>
+              <div className={headingClass}>Enhance your knowledge</div>
+              <div className={headingClass}>Achieve greater success</div>
+              <div className={headingClass}>Improve your health</div>
+              <div className={headingClass}>Develop better parenting skills</div>
+              <div className={headingClass}>Increase happiness</div>
+              <div className={headingClass}>Be the best version of yourself!</div>
             </div>
             <div className="statistics__content--details">
               <div className="statistics__data">
@@ -142,12 +145,12 @@ export default function Home() { //add Login Modul, Hoover effect
             <div
               className="statistics__content--header statistics__content--header-second"
             >
-              <div className="statistics__heading">Expand your learning</div>
-              <div className="statistics__heading">Accomplish your goals</div>
-              <div className="statistics__heading">Strengthen your vitality</div>
-              <div className="statistics__heading">Become a better caregiver</div>
-              <div className="statistics__heading">Improve your mood</div>
-              <div className="statistics__heading">Maximize your abilities</div>
+              <div className={headingClass}>Expand your learning</div>
+              <div className={headingClass}>Accomplish your goals</div>
+              <div className={headingClass}>Strengthen your vitality</div>
+              <div className={headingClass}>Become a better caregiver</div>
+              <div className={headingClass}>Improve your mood</div>
+              <div className={headingClass}>Maximize your abilities</div>
             </div>
           </div>
         </div>
@@ -214,7 +217,7 @@ export default function Home() { //add Login Modul, Hoover effect
             </div>
           </div>
           <div className="reviews__btn--wrapper">
-            <button className="btn home__cta--btn">Login</button>
+            <button className="btn home__cta--btn" onClick={onLoginClick}>Login</button>
           </div>
         </div>
       </div>
