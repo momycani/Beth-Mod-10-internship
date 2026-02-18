@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
   margin: 0;
   padding: 0;
@@ -209,8 +213,7 @@ button:disabled {
 
 .statistics__heading {
   font-size: 32px;
-  font-weight: 500;
-  color: #6b757b;
+  font-weight: 500;  
   margin-bottom: 16px;
 }
 
@@ -360,6 +363,86 @@ button:disabled {
   color: #394547;
   font-weight: 300;
 }
+
+/* MODAL */
+
+.modalOverlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 24px;
+}
+
+.modalCard{
+  width: min(520px, 100%);
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  position: relative;
+}
+
+.modalClose{
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 28px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.modalTitle{ 
+  margin: 0 0 16px; 
+  text-align: center; }
+
+.btn{ 
+  width: 100%; 
+  padding: 12px; 
+  border-radius: 8px; 
+  border: 1px solid #ddd; 
+  cursor: pointer; 
+}
+
+.input{ 
+  width: 100%; 
+  padding: 12px; 
+  border-radius: 8px; 
+  border: 1px solid #ddd; 
+  margin-top: 10px; 
+}
+
+.dividerRow{ 
+  display: flex; 
+  align-items: center; 
+  gap: 10px; 
+  margin: 14px 0; 
+}
+
+.dividerLine{ 
+  flex: 1; 
+  height: 1px; 
+  background: #e6e6e6; 
+}
+
+.dividerText{ 
+  color: #777; 
+  font-size: 14px; 
+}
+
+.linkBtn{ 
+  width: 100%; 
+  background: transparent; 
+  border: none; 
+  color: #1a73e8; 
+  margin-top: 10px; 
+  cursor: pointer; 
+}
+
+/* FOOTER */
 
 #footer {
   background-color: rgb(241 246 244);
