@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { FcGoogle } from "react-icons/fc";
 import { signInWithPopup, createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, googleProvider } from "../firebase";
+import { auth, googleProvider } from "../../firebase";
 
 export default function SignUpModal({ open, onClose, onGoToLogin }) {
   const [email, setEmail] = useState("");
@@ -50,7 +50,7 @@ export default function SignUpModal({ open, onClose, onGoToLogin }) {
   return createPortal(
     <div className="modalOverlay" onMouseDown={onClose}>
       <div
-        className="modalCard w-full max-w-md p-6 relative"
+        className="modalCard"
         onMouseDown={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
@@ -79,27 +79,24 @@ export default function SignUpModal({ open, onClose, onGoToLogin }) {
         </div>
 
         <input
-          className="input"
+          className="modalInput"
           placeholder="Email Address"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
-          className="input mt-3"
+          className="modalInput"
           placeholder="Password"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button
-          onClick={handleEmailSignup}
-          className="mt-4 w-full h-12 rounded-lg bg-emerald-500 text-white hover:bg-emerald-600 transition"
-        >
+        <button onClick={handleEmailSignup} className="modalPrimaryBtn">
           Sign up
         </button>
 
-        {/* Footer strip like your screenshot */}
+        {/* Footer strip */}
         <div className="mt-6 -mx-6 border-t border-slate-200 rounded-b-xl bg-slate-50 py-4">
           <button
             onClick={onGoToLogin}

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import { sendPasswordResetEmail } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth } from "../../firebase";
 
 export default function ResetPasswordModal({ open, onClose }) {
   const [email, setEmail] = useState("");
@@ -26,40 +26,25 @@ export default function ResetPasswordModal({ open, onClose }) {
 
   return createPortal(
     <div className="modalOverlay" onMouseDown={onClose}>
-      <div
-        className="modalCard w-full max-w-sm p-6"
-        onMouseDown={(e) => e.stopPropagation()}
-      >
-        <button
-          className="absolute top-3 right-4 text-xl"
-          onClick={onClose}
-        >
+      <div className="modalCard" onMouseDown={(e) => e.stopPropagation()}>
+        <button className="modalClose" onClick={onClose} aria-label="Close">
           ×
         </button>
 
-        <h2 className="text-lg font-semibold text-center mb-4">
-          Reset your password
-        </h2>
+        <h2 className="modalTitle">Reset your password</h2>
 
         <input
-          className="input mb-4"
+          className="modalInput"
           placeholder="Email address"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        <button
-          onClick={handleReset}
-          disabled={loading}
-          className="w-full h-10 rounded bg-emerald-500 text-white hover:bg-emerald-600 transition"
-        >
+        <button onClick={handleReset} disabled={loading} className="modalPrimaryBtn">
           {loading ? "Sending..." : "Send reset password link"}
         </button>
 
-        <button
-          onClick={onClose}
-          className="mt-4 text-sm text-blue-500 w-full text-center"
-        >
+        <button onClick={onClose} className="modalLink">
           Go to login
         </button>
       </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import "../styles/style.css"
+import "../styles/home.css"
 import { AiFillFileText, AiFillBulb, AiFillAudio } from "react-icons/ai";
 import { BsStarFill, BsStarHalf } from "react-icons/bs";
 import { BiCrown } from "react-icons/bi";
@@ -42,9 +42,9 @@ export default function Home({ onLoginClick }: HomeProps) {
                 <br className="remove--tablet" />
                 individuals who barely have time to read,
                 <br className="remove--tablet" />
-                and even people who don’t like to read.
+                and even people who don't like to read.
               </div>
-              <button className="btn home__cta--btn" onClick={onLoginClick}>Login</button>
+              <button className="homeBtn home__cta--btn" onClick={onLoginClick}>Login</button>
             </div>
             <figure className="landing__image--mask">
               <img src="/assets/landing.png" alt="landing" />
@@ -217,7 +217,7 @@ export default function Home({ onLoginClick }: HomeProps) {
             </div>
           </div>
           <div className="reviews__btn--wrapper">
-            <button className="btn home__cta--btn" onClick={onLoginClick}>Login</button>
+            <button className="homeBtn home__cta--btn" onClick={onLoginClick}>Login</button>
           </div>
         </div>
       </div>

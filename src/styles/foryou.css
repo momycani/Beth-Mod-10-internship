@@ -1,0 +1,489 @@
+
+/* =========================================================
+   5) APP LAYOUT (Sidebar + Topbar)
+========================================================= */
+.app-layout {
+  display: flex; 
+}
+
+/* main content column */
+.main-area {
+  margin-left: 240px;        /* push content right of sidebar */
+  width: calc(100% - 240px);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* page content */
+.page-content {
+  padding: 24px;
+  min-width: 0;
+  overflow: visible;         /* page scrolls normally */
+}
+
+/* TOP BAR */
+.topbar {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 32px;
+  border-bottom: 1px solid #e6eaef;
+  background: white;
+}
+
+.search-wrapper {
+  display: flex;
+  align-items: center;
+  background: #f3f6f9;
+  border-radius: 12px;
+  padding-left: 16px;
+  width: 420px;
+  height: 48px;
+  border: 1px solid #dde3ea;
+}
+
+.search-wrapper:focus-within {
+  border-color: #1dbf73;
+  box-shadow: 0 0 0 2px rgba(29, 191, 115, 0.15);
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  color: #1c2b3a;
+  padding-left: 0;
+}
+
+.search-divider {
+  width: 1px;
+  height: 60%;
+  background: #d5dbe3;
+}
+
+.search-button {
+  width: 56px;
+  height: 100%;
+  border: none;
+  background: #f4f7fa;
+  color: grey;
+  border-radius: 0 12px 12px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s;
+}
+
+.search-button:hover {
+  background: #1dbf73;
+}
+
+/* SIDEBAR */
+
+/* FIXED SIDEBAR */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 240px;
+  background: #f4f7fa;
+  padding: 24px 16px;
+  overflow: hidden;
+  z-index: 1000;
+  display: flex;              /* ✅ add */
+  flex-direction: column;     /* ✅ add */
+}
+
+.sidebar__logo {
+  margin-bottom: 40px;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.sidebar__img--mask {
+  max-width: 170px;
+  margin: 0 auto;
+}
+
+.sidebar__img {
+  width: 100%;
+  height: 100%;
+}
+
+.sidebar__top {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sidebar__bottom {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sidebar__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: #1c2b3a;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.sidebar__item:hover {
+  color: #1dbf73;
+}
+
+.sidebar__item.active {
+  color: #1dbf73;
+  font-weight: 600;
+}
+
+/* =========================================================
+   FOR YOU PAGE — Selected
+========================================================= */
+
+.fy-page{
+  width: 100%;
+  max-width: 100%;
+}
+
+.selected {
+  padding: 24px 0;
+  position: relative;
+  z-index: 10;
+  isolation: isolate;
+}
+
+.selected__title {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 16px;
+}
+
+.selected__card{
+  background: #f7ecd2;
+  border-radius: 4px;
+  padding: 24px;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  width: 100%;
+}
+
+/* left */
+.selected__left{
+  flex: 0 0 360px;
+  min-width: 260px;
+}
+
+.selected__headline{
+  font-size: 18px;
+  line-height: 1.3;
+  max-width: 520px;
+}
+
+/* divider */
+.selected__divider{
+  width: 1px;
+  height: 120px;
+  background: #b8b1a0;
+  flex: 0 0 1px;
+}
+
+/* cover */
+.selected__coverWrap{
+  flex: 0 0 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.selected__cover{
+  width: 160px;
+  height: auto;
+  display: block;
+}
+
+.selected__coverFallback{
+  width: 160px;
+  height: 200px;
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+}
+
+/* right */
+.selected__right{
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.selected__bookTitle {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.selected__author {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.selected__meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.selected__play {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: #111;
+  color: #fff;
+  display: grid;
+  place-items: center;
+}
+
+.selected__time {
+  font-weight: 600;
+}
+
+/* loading + error */
+.selected__card--skeleton {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.selected__error {
+  padding: 16px;
+  background: rgba(255, 0, 0, 0.06);
+  border-radius: 8px;
+}
+
+/* responsive */
+@media (max-width: 900px){
+  .selected__card{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .selected__divider{
+    display: none;
+  }
+
+  .selected__coverWrap{
+    width: 100%;
+    flex: 0 0 auto;
+  }
+
+  .selected__cover{
+    margin: 0 auto;
+  }
+}
+
+/* FOR YOU – CAROUSEL (react-slick) */
+.fy-carousel {
+  padding: 24px 24px 10px;
+  margin-top: 32px auto 0;
+  max-width: 1000px;  
+}
+
+.fy-carousel__title {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+
+.fy-carousel__subtitle {
+  margin: 0 0 16px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+/* spacing between slides */
+.fy-carousel .slick-slide > div {
+  padding: 0 10px;
+  box-sizing: border-box; 
+}
+
+.fy-slide {
+  height: 100%;
+  flex: 0 0 220px;  /* fixed card width */
+  scroll-snap-align: start;
+}
+
+/* keep slick contained */
+.fy-carousel .slick-list {
+  margin: 0 -10px;
+  overflow: hidden;
+}
+
+.fy-carousel .slick-slide {
+  height: auto !important;
+}
+
+/* arrows */
+.fy-carousel .slick-prev,
+.fy-carousel .slick-next {
+  z-index: 2;
+}
+
+/* skeletons */
+.fy-carousel__skeletonRow {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+
+.fy-card--skeleton {
+  height: 360px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+/* REAL cards (you currently don't have this) */
+.fy-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 360px;          /* matches skeleton height */
+}
+
+.fy-card__coverWrap {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.fy-card__cover {
+  width: 100%;
+  aspect-ratio: 1 / 1;        /* keeps image area stable */
+  object-fit: cover;
+  display: block;
+}
+
+/* Premium badge positioning (optional but helps consistency) */
+.fy-card__badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #032b41;
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  z-index: 2;
+}
+
+/* text spacing (optional) */
+.fy-card__title { margin: 12px 0 4px; font-size: 18px; font-weight: 700; }
+.fy-card__author { font-size: 14px; opacity: 0.75; margin-bottom: 8px; }
+.fy-card__desc { font-size: 14px; line-height: 1.4; opacity: 0.9; }
+
+/* meta row */
+.fy-card__meta {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 10px;
+}
+
+.fy-meta {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+/* Arrow + scroll carousel (no react-slick) */
+.fy-carousel__wrap {
+  position: relative;
+  padding: 0 56px; /* room for arrows */
+}
+
+.fy-carousel__scroller {
+  display: flex;
+  gap: 20px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 6px;
+  scrollbar-width: none;       /* Firefox */
+}
+
+.fy-carousel__scroller::-webkit-scrollbar {
+  display: none;               /* Chrome/Safari */
+}
+
+.fy-slide {
+  flex: 0 0 calc((100% - 80px) / 5 + 6px); /* 4 gaps * 20px */;
+  scroll-snap-align: start;
+  min-width: 0; 
+}
+
+@media (max-width: 980px) {
+  .fy-slide { flex-basis: 200px; }
+}
+@media (max-width: 700px) {
+  .fy-slide { flex-basis: 180px; }
+}
+
+.fy-carousel__arrow {
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.15);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 10;
+}
+
+.fy-carousel__arrow--left { left: -10px; }
+.fy-carousel__arrow--right { right: -10px; }
+
+
+/* =========================================================
+   8) RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+  .selected__card {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .selected__divider {
+    display: none;
+  }
+
+  .selected__headline {
+    max-width: 100%;
+  }
+
+  .selected__cover {
+    margin: 0 auto;
+  }
+}  
