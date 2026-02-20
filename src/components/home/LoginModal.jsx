@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaUser } from "react-icons/fa";
 import { signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
-import { auth, googleProvider } from "../firebase"; // adjust path if needed
+import { auth, googleProvider } from "../../firebase"; // adjust path if needed
 import { useNavigate } from "react-router-dom";
 import ResetPasswordModal from "./ResetPasswordModal";
 
@@ -122,18 +122,18 @@ export default function LoginModal({ open, onClose, onOpenSignUp }) {
           <span className="dividerText">or</span>
           <span className="dividerLine" />
         </div>
-        <input className="input" placeholder="Email Address" value={email} onChange={(e) => {
+        <input className="modalInput" placeholder="Email Address" value={email} onChange={(e) => {
             setEmail(e.target.value);
             if (error) setError("");
           }}
         />
-        <input className="input mt-3" placeholder="Password" type="password" value={password} onChange={(e) => {
+        <input className="modalInput" placeholder="Password" type="password" value={password} onChange={(e) => {
             setPassword(e.target.value);
             if (error) setError("");
           }}
         />        
         <button onClick={handleEmailLogin} disabled={loading}
-          className="mt-4 w-full h-12 rounded-lg bg-emerald-500 text-white hover:bg-emerald-600 transition disabled:opacity-60">
+          className="modalPrimaryBtn">
           {loading ? "Logging in..." : "Login"}
         </button>
 
