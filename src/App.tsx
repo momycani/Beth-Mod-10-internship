@@ -12,6 +12,7 @@ import Library from "./pages/Library";
 import LoginModal from "./components/home/LoginModal.jsx";
 import SignUpModal from "./components/home/SignUpModal.jsx";
 import Layout from "./components/layout/Layout";
+import Search from './pages/Search';
 
 export default function App() {
   const [loginOpen, setLoginOpen] = useState(false);
@@ -29,6 +30,7 @@ export default function App() {
       <Route path="/" element={<Home onLoginClick={openLogin} />} />     
       <Route element={<Layout />}>   
         <Route path="/for-you" element={<ForYou />} />
+        <Route path="/search" element={<Search />} />
         <Route path="/book/:id" element={<Book />} />
         <Route path="/player/:id" element={<Player />} />
         <Route path="/choose-plan" element={<ChoosePlan />} />

@@ -143,8 +143,7 @@ export default function Home({ onLoginClick }: HomeProps) {
               </div>
             </div>
             <div
-              className="statistics__content--header statistics__content--header-second"
-            >
+              className="statistics__content--header statistics__content--header-second">
               <div className={headingClass}>Expand your learning</div>
               <div className={headingClass}>Accomplish your goals</div>
               <div className={headingClass}>Strengthen your vitality</div>
