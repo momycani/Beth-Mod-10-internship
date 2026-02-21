@@ -55,7 +55,7 @@ export default function SelectedForYou() {
     return (
       <section className="selected">
         <h2 className="selected__title">Selected just for you</h2>
-        <div className="selected__error">Couldn’t load selected books.</div>
+        <div className="selected__error">Couldn't load selected books.</div>
       </section>
     );
   }
@@ -83,10 +83,7 @@ export default function SelectedForYou() {
             <img
               className="selected__cover"
               src={cover}
-              alt={title}
-              // onLoad={() => console.log("IMAGE LOADED ✅", cover)}
-              // onError={() => console.log("IMAGE FAILED ❌", cover)}
-            />
+              alt={title} />
           ) : (
             <div className="selected__coverFallback" />
           )}

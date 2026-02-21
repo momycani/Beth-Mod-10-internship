@@ -15,7 +15,7 @@
 }
 
 body {
-  max-width: 1300px;
+  max-width: 100%;
   overflow-x: hidden;
 }
 
@@ -45,17 +45,20 @@ button:disabled {
 }
 
 /* Layout helpers */
-.row {
+
+.container {
   max-width: 1200px;
+  padding: 40px 0;
   width: 100%;
   margin: 0 auto;
+}
+
+.row {
+  width: 100%;
+  margin: 0 20px;
   padding: 0 24px;
 }
 
-.container {
-  padding: 40px 0;
-  width: 100%;
-}
 
 /* =========================================================
    2) REUSABLE UI
@@ -89,15 +92,16 @@ button:disabled {
   background-color: rgb(241 246 244);
 }
 
-.footer__top--wrapper {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  font-size: 14px;
-  margin: 32px auto 64px;
+.footer__top--wrapper {  
+  font-size: 16px;
+  margin: 0 auto 64px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
 }
 
 .footer__block {
+  align-items: center;
   z-index: 1;
 }
 
@@ -172,9 +176,26 @@ button:disabled {
 /* =========================================================
    8) RESPONSIVE
 ========================================================= */
+@media (max-width: 1024px) {
+  .footer__top--wrapper {
+    padding: 0 24px 0 0;
+  }
+}
+@media (max-width: 932px) {}
+
 @media (max-width: 768px) {
   .footer__top--wrapper {
-    flex-direction: column;
-    gap: 32px;
+    grid-template-columns: repeat(2, 1fr);     
+    margin: 0 32px 32px 96px;   
+  }
+}
+@media (max-width: 640px) {}
+@media (max-width: 550px) {  
+}
+@media (max-width: 480px) {
+  .footer__top--wrapper {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 0 54px 0 0;
   }
 }
