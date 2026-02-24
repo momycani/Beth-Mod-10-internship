@@ -1,6 +1,223 @@
-@media (max-width: 1024px) {}
-@media (max-width: 932px) {}
-@media (max-width: 768px) {}
+.book-layout {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  /* flex: 1; 
+  min-width: 0; */
+}
+
+.book-layout__left {
+  flex: 1;                 /* left takes remaining space */
+  min-width: 0;
+}
+
+.book-layout__right {
+  flex: 0 0 280px;  /* right column fixed-ish width */
+  align-self: flex-start;       
+}
+
+.book-cover{
+  width: 100%; 
+  display: block;
+  object-fit: contain;
+}
+
+.book-left{
+  max-width: 720px; /* keeps line length nice like screenshot */
+}
+
+.book-title{
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0 0 10px;
+  letter-spacing: -0.5px;
+}
+
+.book-author{
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.book-subtitle{
+  font-size: 20px;
+  line-height: 1.35;
+  margin-bottom: 14px;
+  opacity: 0.85;
+}
+
+.book-divider{
+  height: 1px;
+  background: #e6eaee;
+  margin: 16px 0;
+}
+
+.book-stats{
+  display: grid;
+  grid-template-columns: 1fr 1fr;  /* two columns like screenshot */
+  gap: 14px 40px;
+  align-items: center;
+}
+
+.stat{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+}
+
+.stat-icon{
+  font-size: 16px;
+  width: 22px;
+  display: inline-flex;
+  justify-content: center;
+}
+
+.book-actions{
+  display: flex;
+  gap: 16px;
+  margin: 18px 0 14px;
+}
+
+.book-btn{
+  min-width: 160px;
+  height: 52px;
+  border-radius: 8px;
+  border: 0;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;     /* ensure flex is applied here */
+  align-items: center;      /* vertical center */
+  justify-content: center;  /* horizontal center */
+  gap: 8px;                 /* spacing between icon + text */
+}
+
+.book-btn--primary{
+  background: #0b2b3a;
+  color: #fff;
+}
+
+.book-btn--secondary{
+  background: #0b2b3a;
+  color: #fff;
+}
+
+.book-libraryLink{
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: #0b5ed7;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 16px;     /* space above */
+  margin-bottom: 32px;  /* twice the space below */
+}
+
+.book-libraryLink:hover{
+  text-decoration: underline;
+}
+
+.book-libraryIcon{
+  font-size: 18px;
+}
+
+.book-btn__icon,
+.book-libraryIcon {
+  font-size: 1rem;
+}
+.book-btn__icon {
+  font-size: 14px;
+}
+
+.book-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;   /* horizontal + vertical spacing */
+}
+
+.book-cover--mobile {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .book-layout {
+    flex-direction: row;
+    gap: 24px;
+  }
+
+  .book-layout__right {
+    flex: 0 0 220px;       /* shrink cover column (try 200–240) */
+  }
+
+  .book-layout__left {
+    flex: 1;
+    min-width: 0;          /* prevents overflow/clipping */
+  }
+}
+@media (max-width: 932px) {
+  .book-layout {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .book-layout__right {
+    order: -1;          /* moves image ABOVE text */
+    flex: none;
+    width: 100%;
+    display: flex;
+    justify-content: center; /* center image */
+  }
+
+  .book-layout__left {
+    width: 100%;
+  }
+
+  .book-cover {
+    max-width: 320px;   /* control image size */
+  }
+}
+@media (max-width: 768px) {
+  .sidebar {
+    display: none !important;
+  }
+
+  .main-content {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+   .book-layout {
+    display: block;        /* simplest: no two-column layout */
+  }
+
+  .book-layout__right {
+    display: none;         /* sidebar disappears */
+  }
+
+  .book-layout__left {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .book-left {
+    max-width: 100%;       /* you had 720px; remove limit on small screens */
+  }
+
+   .book-cover--mobile {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+
+  .book-cover {
+    max-width: 320px; /* adjust */
+    width: 100%;
+  }
+}
 @media (max-width: 640px) {}
 @media (max-width: 550px) {}
 @media (max-width: 480px) {}
