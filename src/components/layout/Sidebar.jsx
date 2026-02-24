@@ -12,16 +12,23 @@ import { RiBallPenLine } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
 import "../../styles/style.css";
 
-export default function Sidebar() {
+export default function Sidebar({ isOpen, onClose }) {
   return (
-    <div className="sidebar">
+    <>
+      {/* Overlay (only visible on mobile when open) */}
+      <div
+        className={`sidebar-overlay ${isOpen ? "open" : ""}`}
+        onClick={onClose}
+      />
 
-      {/* Logo */}
-      <div className="sidebar__logo">
-        <figure className="sidebar__img--mask">
-          <img className="sidebar__img" src="/assets/logo.png" alt="logo" />
-        </figure>
-      </div>
+      <div className={`sidebar ${isOpen ? "open" : ""}`}>
+
+        {/* Logo */}
+        <div className="sidebar__logo">
+          <figure className="sidebar__img--mask">
+            <img className="sidebar__img" src="/assets/logo.png" alt="logo" />
+          </figure>
+        </div>
 
       {/* Top Navigation */}
       <div className="sidebar__top">
@@ -62,9 +69,8 @@ export default function Sidebar() {
           <FiLogOut size={18} />
           <span>Logout</span>
         </div>
-      </div>
 
-    </div>
+      </div>
+    </>
   );
 }
-

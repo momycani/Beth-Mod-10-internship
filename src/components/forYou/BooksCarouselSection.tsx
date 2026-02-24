@@ -28,35 +28,37 @@ export default function BooksCarouselSection({ title, subtitle, status }: Props)
 
   const scrollerRef = useRef<HTMLDivElement | null>(null);
 
-  // ✅ must match your CSS
-  const CARD_WIDTH = 220;
-  const GAP = 20;
-  const STEP = CARD_WIDTH + GAP;
+ const GAP = 20;
 
-  const scrollByOne = (dir: "left" | "right") => {
-    const el = scrollerRef.current;
-    if (!el) return;
+const getStep = () => {
+  const el = scrollerRef.current;
+  if (!el) return 240;
 
-    const maxScrollLeft = el.scrollWidth - el.clientWidth;
-    const threshold = STEP / 2; // forgiving
+  const firstSlide = el.querySelector<HTMLElement>(".fy-slide");
+  if (!firstSlide) return 240;
 
-    const nearStart = el.scrollLeft <= threshold;
-    const nearEnd = el.scrollLeft >= maxScrollLeft - threshold;
+  return firstSlide.getBoundingClientRect().width + GAP;
+};
 
-    if (dir === "right") {
-      if (nearEnd) {
-        el.scrollTo({ left: 0, behavior: "smooth" }); // wrap to start
-      } else {
-        el.scrollBy({ left: STEP, behavior: "smooth" });
-      }
-    } else {
-      if (nearStart) {
-        el.scrollTo({ left: maxScrollLeft, behavior: "smooth" }); // wrap to end
-      } else {
-        el.scrollBy({ left: -STEP, behavior: "smooth" });
-      }
-    }
-  };
+const scrollByOne = (dir: "left" | "right") => {
+  const el = scrollerRef.current;
+  if (!el) return;
+
+  const STEP = getStep();
+  const maxScrollLeft = el.scrollWidth - el.clientWidth;
+  const threshold = STEP / 2;
+
+  const nearStart = el.scrollLeft <= threshold;
+  const nearEnd = el.scrollLeft >= maxScrollLeft - threshold;
+
+  if (dir === "right") {
+    if (nearEnd) el.scrollTo({ left: 0, behavior: "smooth" });
+    else el.scrollBy({ left: STEP, behavior: "smooth" });
+  } else {
+    if (nearStart) el.scrollTo({ left: maxScrollLeft, behavior: "smooth" });
+    else el.scrollBy({ left: -STEP, behavior: "smooth" });
+  }
+};
 
   useEffect(() => {
     let alive = true;

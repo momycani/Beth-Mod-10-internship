@@ -56,7 +56,7 @@ export default function SelectedForYou() {
     return (
       <section className="selected">
         <h2 className="selected__title">Selected just for you</h2>
-        <div className="selected__error">Couldn’t load selected books.</div>
+        <div className="selected__error">Couldn't load selected books.</div>
       </section>
     );
   }
