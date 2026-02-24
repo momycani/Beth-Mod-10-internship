@@ -1,12 +1,13 @@
 import { 
-  FaHome,
-  FaBookmark,
-  FaPen,
-  FaSearch,
-  FaCog,
-  FaQuestionCircle,
-  FaSignInAlt
-} from "react-icons/fa";
+  FiHome,
+  FiBookmark,
+  FiSearch, 
+  FiEdit,
+  FiSettings,
+  FiHelpCircle,
+  FiLogOut
+} from "react-icons/fi";
+import { RiBallPenLine } from "react-icons/ri";
 
 import { NavLink } from "react-router-dom";
 import "../../styles/style.css";
@@ -25,22 +26,22 @@ export default function Sidebar() {
       {/* Top Navigation */}
       <div className="sidebar__top">
         <NavLink to="/for-you" className="sidebar__item">
-          <FaHome />
+          <FiHome size={18} />
           <span>For you</span>
         </NavLink>
 
         <NavLink to="/library" className="sidebar__item">
-          <FaBookmark />
+          <FiBookmark size={18} />
           <span>My Library</span>
         </NavLink>
 
         <NavLink to="/highlights" className="sidebar__item">
-          <FaPen />
+          <RiBallPenLine size={18} />
           <span>Highlights</span>
         </NavLink>
 
         <NavLink to="/search" className="sidebar__item">
-          <FaSearch />
+          <FiSearch size={18} />
           <span>Search</span>
         </NavLink>
       </div>
@@ -48,18 +49,18 @@ export default function Sidebar() {
       {/* Bottom Section */}
       <div className="sidebar__bottom">
         <NavLink to="/settings" className="sidebar__item">
-          <FaCog />
+          <FiSettings size={18} />
           <span>Settings</span>
         </NavLink>
 
         <NavLink to="/support" className="sidebar__item">
-          <FaQuestionCircle />
+          <FiHelpCircle size={18} />
           <span>Help & Support</span>
         </NavLink>
 
         <div className="sidebar__item">
-          <FaSignInAlt />
-          <span>Login</span>
+          <FiLogOut size={18} />
+          <span>Logout</span>
         </div>
       </div>
 

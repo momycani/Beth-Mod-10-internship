@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { FaClock, FaStar } from "react-icons/fa";
 import type { Book } from "../../types/Book";
 
@@ -65,7 +66,7 @@ export default function BooksCarouselSection({ title, subtitle, status }: Props)
         setLoading(true);
         const res = await fetch(`${BASE}?status=${encodeURIComponent(status)}`);
         const data = await res.json();
-
+     
         const list = Array.isArray(data)
           ? (data as Book[])
           : Array.isArray(data?.books)
@@ -113,34 +114,40 @@ export default function BooksCarouselSection({ title, subtitle, status }: Props)
 
           <div ref={scrollerRef} className="fy-carousel__scroller">
             {books.map((b) => (
-              <div key={b.id} className="fy-slide">
-                <article className="fy-card">
-                  <div className="fy-card__coverWrap">
-                    {b.subscriptionRequired ? (
-                      <div className="fy-card__badge">Premium</div>
-                    ) : null}
-                    <img className="fy-card__cover" src={b.imageLink} alt={b.title} />
-                  </div>
+  <Link
+    key={b.id}
+    to={`/book/${b.id}`}
+    className="fy-slide"
+    style={{ textDecoration: "none", color: "inherit" }}
+  >
+    <article className="fy-card">
+      <div className="fy-card__coverWrap">
+        {b.subscriptionRequired ? (
+          <div className="fy-card__badge">Premium</div>
+        ) : null}
 
-                  <h3 className="fy-card__title">{b.title}</h3>
-                  <div className="fy-card__author">{b.author}</div>
-                  <div className="fy-card__desc">{b.subTitle}</div>
+        <img className="fy-card__cover" src={b.imageLink} alt={b.title} />
+      </div>
 
-                  <div className="fy-card__meta">
-                    <span className="fy-meta">
-                      <FaClock />
-                      <span>
-                        {formatAudioLength((b as any).audioLength ?? (b as any).duration)}
-                      </span>
-                    </span>
-                    <span className="fy-meta">
-                      <FaStar />
-                      <span>{Number(b.averageRating ?? 0).toFixed(1)}</span>
-                    </span>
-                  </div>
-                </article>
-              </div>
-            ))}
+      <h3 className="fy-card__title">{b.title}</h3>
+      <div className="fy-card__author">{b.author}</div>
+      <div className="fy-card__desc">{b.subTitle}</div>
+
+      <div className="fy-card__meta">
+        <span className="fy-meta">
+          <FaClock />
+          <span>
+            {formatAudioLength((b as any).audioLength ?? (b as any).duration)}
+          </span>
+        </span>
+        <span className="fy-meta">
+          <FaStar />
+          <span>{Number(b.averageRating ?? 0).toFixed(1)}</span>
+        </span>
+      </div>
+    </article>
+  </Link>
+))}
           </div>
 
           <button
