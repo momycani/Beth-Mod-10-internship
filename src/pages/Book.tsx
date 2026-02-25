@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import SkeletonLoading from "../components/SkeletonLoading";
 import "../styles/book.css"
+import BookSkeleton from "../components/skeletons/BookSkeleton";
 import { FiStar, FiClock, FiMic } from "react-icons/fi";
 import { HiOutlineLightBulb } from "react-icons/hi";
 import { RiBookOpenLine, RiHeadphoneLine, RiBookmarkLine } from "react-icons/ri";
@@ -51,7 +51,10 @@ export default function Book() {
   async function load() {
     try {
       setStatus("loading");
+      setBook(null);
       setError("");
+
+      const start = Date.now();
 
       const res = await fetch(
         `${BOOK_URL}?id=${encodeURIComponent(id!)}`,
@@ -63,6 +66,10 @@ export default function Book() {
       const data = await res.json();
       
       setBook(data);
+
+      const elapsed = Date.now() - start;
+      if (elapsed < 800) await new Promise(r => setTimeout(r, 800 - elapsed));
+
       setStatus("ready");
     } catch (err: any) {
       if (err.name === "AbortError") return;
@@ -76,14 +83,8 @@ export default function Book() {
 }, [id]);
 
   if (status === "loading") {
-    return (
-      <section className="mt90 sm-mt-0">
-        <div className="container">
-          <SkeletonLoading mode="details" />
-        </div>
-      </section>
-    );
-  }
+  return <BookSkeleton />;
+}
 
   if (status === "error") {
     return (

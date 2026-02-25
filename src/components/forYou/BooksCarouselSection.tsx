@@ -1,6 +1,7 @@
+import React from "react";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { FaClock, FaStar } from "react-icons/fa";
+import { FiStar, FiClock, FiMic } from "react-icons/fi";
 import type { Book } from "../../types/Book";
 
 type Props = {
@@ -137,13 +138,13 @@ const scrollByOne = (dir: "left" | "right") => {
 
       <div className="fy-card__meta">
         <span className="fy-meta">
-          <FaClock />
+          <FiClock />
           <span>
             {formatAudioLength((b as any).audioLength ?? (b as any).duration)}
           </span>
         </span>
         <span className="fy-meta">
-          <FaStar />
+          <FiStar />
           <span>{Number(b.averageRating ?? 0).toFixed(1)}</span>
         </span>
       </div>

@@ -75,7 +75,7 @@ export default function SelectedForYou() {
       <Link
   to={`/book/${book.id}`}
   className="selected__card"
-  style={{ textDecoration: "none", color: "inherit", display: "block" }}
+  style={{ textDecoration: "none", color: "inherit" }}
 >
   <div className="selected__left">
     <div className="selected__headline">{book.subTitle}</div>
