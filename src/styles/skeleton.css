@@ -1,0 +1,12 @@
+.skeleton {
+  background: #e6e9ee;
+  border-radius: 6px;
+  animation: skeletonPulse 1.4s ease-in-out infinite;
+  min-height: 20px;   /* 👈 add this */
+}
+
+@keyframes skeletonPulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.55; }
+  100% { opacity: 1; }
+}

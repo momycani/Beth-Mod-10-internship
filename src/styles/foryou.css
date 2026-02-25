@@ -186,14 +186,14 @@
   display: flex;
   align-items: center;
   gap: 32px;
-  width: 100%;
+  width: 80%;
   min-width: 0;
 }
 
 /* left */
 .selected__left{
   flex: 1;
-  min-width: 260px;
+  min-width: 220px;
 }
 
 .selected__headline{

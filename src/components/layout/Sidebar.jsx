@@ -69,8 +69,7 @@ export default function Sidebar({ isOpen, onClose }) {
           <FiLogOut size={18} />
           <span>Logout</span>
         </div>
-
       </div>
-    </>
-  );
-}
+    </div>
+  </>
+)}
