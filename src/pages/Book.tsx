@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import "../styles/book.css"
 import BookSkeleton from "../components/skeletons/BookSkeleton";
 import { FiStar, FiClock, FiMic } from "react-icons/fi";
@@ -34,7 +34,7 @@ type Book = {
 
 export default function Book() {
   const { id } = useParams<{ id: string }>();
-
+  const navigate = useNavigate();
   const [book, setBook] = useState<Book | null>(null);
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
   const [error, setError] = useState("");
@@ -151,16 +151,25 @@ export default function Book() {
                 <div className="book-divider" />
 
                 <div className="book-actions">
-                  <button className="book-btn book-btn--primary" type="button">
+                  <button
+                    className="book-btn book-btn--primary"
+                    type="button"
+                    onClick={() => navigate(`/player/${id}`)}
+                  >
                     <RiBookOpenLine className="book-btn__icon" />
                     <span>Read</span>
                   </button>
 
-                  <button className="book-btn book-btn--secondary" type="button">
+                  <button
+                    className="book-btn book-btn--secondary"
+                    type="button"
+                    onClick={() => navigate(`/player/${id}`)}
+                  >
                     <RiHeadphoneLine className="book-btn__icon" />
                     <span>Listen</span>
                   </button>
                 </div>
+  
 
                 <button type="button" className="book-libraryLink">
                   <RiBookmarkLine className="book-libraryIcon" />
