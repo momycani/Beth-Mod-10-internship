@@ -144,6 +144,11 @@
   display: none;
 }
 
+.is-disabled {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
 @media (max-width: 1024px) {
   .book-layout {
     flex-direction: row;
@@ -159,6 +164,9 @@
     min-width: 0;          /* prevents overflow/clipping */
   }
 }
+
+/* RESPONSIVENESS */
+
 @media (max-width: 932px) {
   .book-layout {
     flex-direction: column;

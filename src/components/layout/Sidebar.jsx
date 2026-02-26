@@ -1,8 +1,7 @@
 import { 
   FiHome,
   FiBookmark,
-  FiSearch, 
-  FiEdit,
+  FiSearch,   
   FiSettings,
   FiHelpCircle,
   FiLogOut
