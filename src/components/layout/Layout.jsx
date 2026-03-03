@@ -14,7 +14,7 @@ export default function Layout() {
     <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
     <div className="main-area">
-      <TopBar onMenuClick={() => setSidebarOpen(true)} />
+      <TopBar isMenuOpen={sidebarOpen} onMenuClick={() => setSidebarOpen((v) => !v)} />
       <div className="page-content">
         <Outlet />
       </div>
