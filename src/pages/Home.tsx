@@ -1,9 +1,12 @@
 import React from 'react';
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react';
 import "../styles/home.css"
 import { AiFillFileText, AiFillBulb, AiFillAudio } from "react-icons/ai";
 import { BsStarFill, BsStarHalf } from "react-icons/bs";
 import { BiCrown } from "react-icons/bi";
 import { RiLeafLine } from "react-icons/ri";
+import { FaCheckCircle } from "react-icons/fa";
 
 interface HomeProps {
   onLoginClick: () => void;
@@ -13,8 +16,32 @@ const headingClass =
   "statistics__heading hover:text-emerald-500 transition-colors duration-300 cursor-pointer";
 
 export default function Home({ onLoginClick }: HomeProps) { 
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const [successMessage, setSuccessMessage] = useState(
+    location.state?.successMessage || ""
+  );
+
+  useEffect(() => {
+    if (!location.state?.successMessage) return;
+
+    const timer = setTimeout(() => {
+      setSuccessMessage("");
+      navigate(location.pathname, { replace: true });
+    }, 2500);
+
+    return () => clearTimeout(timer);
+  }, [location, navigate]);
+  
   return (
-    <>    
+    <> 
+      {successMessage && (
+        <div className="auth-success-banner">
+          <FaCheckCircle className="auth-success-icon" />
+          <span>{successMessage}</span>
+        </div>
+      )} 
      <nav className="nav">      
       <div className="nav__wrapper">
         <figure className="nav__img--mask">

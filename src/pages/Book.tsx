@@ -32,12 +32,27 @@ type Book = {
   subscriptionRequired?: boolean;  // ✅ add this
 };
 
-export default function Book() {
+export default function Book({
+  onRequireLogin,
+}: {
+  onRequireLogin: () => void;
+}) {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [book, setBook] = useState<Book | null>(null);
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
   const [error, setError] = useState("");
+  const isGuest = localStorage.getItem("isGuest") === "true";
+
+  const handleOpenPlayer = () => {
+  if (isGuest) {
+    localStorage.setItem("postAuthRedirect", `/player/${id}`);
+    onRequireLogin();
+    return;
+  }
+
+  navigate(`/player/${id}`);
+};
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -154,8 +169,7 @@ export default function Book() {
                   <button
                     className="book-btn book-btn--primary"
                     type="button"
-                    onClick={() => navigate(`/player/${id}`)}
-                  >
+                    onClick={handleOpenPlayer}>
                     <RiBookOpenLine className="book-btn__icon" />
                     <span>Read</span>
                   </button>
@@ -163,8 +177,7 @@ export default function Book() {
                   <button
                     className="book-btn book-btn--secondary"
                     type="button"
-                    onClick={() => navigate(`/player/${id}`)}
-                  >
+                    onClick={handleOpenPlayer}>
                     <RiHeadphoneLine className="book-btn__icon" />
                     <span>Listen</span>
                   </button>
@@ -214,7 +227,7 @@ export default function Book() {
                 )}
 
                 <p style={{ marginTop: 24 }}>
-                  <Link to="/for-you">← Back</Link>
+                  <Link to="/foryou">← Back</Link>
                 </p>
               </div>
 
