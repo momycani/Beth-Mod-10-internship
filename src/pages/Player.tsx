@@ -16,10 +16,14 @@ function formatTime(seconds: number) {
 
 // Player.tsx
 
+export default function Player({
+  onRequireLogin,
+}: {
+  onRequireLogin: () => void;
+}) {
 
+  const isGuest = localStorage.getItem("isGuest") === "true";
 
-
-export default function Player() {
   const { id } = useParams<{ id: string }>();
   const [book, setBook] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
@@ -31,10 +35,7 @@ export default function Player() {
   const [duration, setDuration] = useState(0);
   const [seeking, setSeeking] = useState(false);
   
-  
-  
-
-  // fetch book (contains audioLink)
+// fetch book (contains audioLink)
   useEffect(() => {
     if (!id) return;
     let alive = true;
@@ -58,32 +59,20 @@ export default function Player() {
     };
   }, [id]);
 
-  // wire audio element events
   useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
+  setCurrent(0);
+  setDuration(0);
+  setIsPlaying(false);
+}, [book?.audioLink]);
 
-    const onLoaded = () => {
-      setDuration(audio.duration || 0);
-    };
-    const onTime = () => {
-      if (!seeking) setCurrent(audio.currentTime);
-    };
-    const onEnded = () => {
-      setIsPlaying(false);
-      setCurrent(0);
-    };
+  useEffect(() => {
+    if (isGuest) {
+      localStorage.setItem("postAuthRedirect", `/player/${id}`);
+      onRequireLogin();
+    }
+  }, [isGuest, onRequireLogin]);
 
-    audio.addEventListener("loadedmetadata", onLoaded);
-    audio.addEventListener("timeupdate", onTime);
-    audio.addEventListener("ended", onEnded);
 
-    return () => {
-      audio.removeEventListener("loadedmetadata", onLoaded);
-      audio.removeEventListener("timeupdate", onTime);
-      audio.removeEventListener("ended", onEnded);
-    };
-  }, [seeking]);
 
   // play / pause toggling
   const togglePlay = async () => {
@@ -130,6 +119,18 @@ export default function Player() {
         ref={audioRef}
         src={book?.audioLink ?? ""}
         preload="metadata"
+        onLoadedMetadata={(e) => {
+    setDuration(e.currentTarget.duration || 0);
+  }}
+  onTimeUpdate={(e) => {
+    if (!seeking) {
+      setCurrent(e.currentTarget.currentTime);
+    }
+  }}
+  onEnded={() => {
+    setIsPlaying(false);
+    setCurrent(0);
+  }}
       />
 
       {/* MAIN CONTENT (centered reading column) */}
@@ -212,6 +213,13 @@ export default function Player() {
             onMouseUp={(e) => onSeekEnd(Number((e.target as HTMLInputElement).value))}
             onTouchEnd={(e) => onSeekEnd(Number((e.target as HTMLInputElement).value))}
             aria-label="Seek"
+            style={{
+              background: `linear-gradient(to right, #ffffff 0%, #ffffff ${
+                duration ? (current / duration) * 100 : 0
+              }%, rgba(255,255,255,0.18) ${
+                duration ? (current / duration) * 100 : 0
+              }%, rgba(255,255,255,0.18) 100%)`,
+            }}
           />
 
           <div className="player-time">{formatTime(duration)}</div>

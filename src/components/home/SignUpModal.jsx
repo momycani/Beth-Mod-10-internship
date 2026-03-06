@@ -2,11 +2,16 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { FcGoogle } from "react-icons/fc";
 import { signInWithPopup, createUserWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 import { auth, googleProvider } from "../../firebase";
 
 export default function SignUpModal({ open, onClose, onGoToLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!open) return;
@@ -25,27 +30,62 @@ export default function SignUpModal({ open, onClose, onGoToLogin }) {
 
   if (!open) return null;
 
+  const getRedirectPath = () => {
+  const savedPath = localStorage.getItem("postAuthRedirect");
+  if (savedPath) {
+    localStorage.removeItem("postAuthRedirect");
+    return savedPath;
+  }
+  return "/foryou";
+};
+
   const handleGoogleSignup = async () => {
     try {
-      const result = await signInWithPopup(auth, googleProvider);
-      console.log("Signed up with Google:", result.user);
+      setLoading(true);
+      setError("");
+
+      await signInWithPopup(auth, googleProvider);
+      localStorage.removeItem("isGuest");
+      const redirectTo = getRedirectPath();
       onClose();
+
+      navigate("/foryou", {
+        state: { successMessage: "Signup successful!" },
+      });
     } catch (err) {
       console.error(err);
-      alert(err?.message || "Google sign up failed");
+      setError(err?.message || "Google sign up failed");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleEmailSignup = async () => {
+    if (!email.trim() || !password) {
+    setError("Please enter your email and password.");
+    return;
+  }
     try {
-      const result = await createUserWithEmailAndPassword(auth, email, password);
-      console.log("Signed up with email:", result.user);
+      setLoading(true);
+      setError("");
+
+      await createUserWithEmailAndPassword(auth, email.trim(), password);
+      localStorage.removeItem("isGuest");
+      const redirectTo = getRedirectPath();
       onClose();
+
+      navigate("/foryou", {
+        state: { successMessage: "Signup successful!" },
+      });
     } catch (err) {
       console.error(err);
-      alert(err?.message || "Sign up failed");
+      setError(err?.message || "Sign up failed");
+    } finally {
+      setLoading(false);
     }
   };
+
+  
 
   return createPortal(
     <div className="modalOverlay" onMouseDown={onClose}>
@@ -63,13 +103,17 @@ export default function SignUpModal({ open, onClose, onGoToLogin }) {
         <h2 className="modalTitle">Sign up to Summarist</h2>
 
         <button
+          type="button"
           onClick={handleGoogleSignup}
+          disabled={loading}
           className="relative flex items-center justify-center w-full h-12 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition"
         >
           <span className="absolute left-3 bg-white w-8 h-8 flex items-center justify-center rounded">
             <FcGoogle className="text-lg" />
           </span>
-          <span className="font-medium">Sign up with Google</span>
+          <span className="font-medium">
+            {loading ? "Signing up..." : "Sign up with Google"}
+          </span>
         </button>
 
         <div className="dividerRow">
@@ -80,23 +124,33 @@ export default function SignUpModal({ open, onClose, onGoToLogin }) {
 
         <input
           className="modalInput"
+          type="email"
           placeholder="Email Address"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          disabled={loading}
         />
+
         <input
           className="modalInput"
           placeholder="Password"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          disabled={loading}
         />
 
-        <button onClick={handleEmailSignup} className="modalPrimaryBtn">
-          Sign up
+        {error && <p className="modalError">{error}</p>}
+
+        <button
+          type="button"
+          onClick={handleEmailSignup}
+          className="modalPrimaryBtn"
+          disabled={loading}
+        >
+          {loading ? "Creating account..." : "Sign up"}
         </button>
 
-        {/* Footer strip */}
         <div className="mt-6 -mx-6 border-t border-slate-200 rounded-b-xl bg-slate-50 py-4">
           <button
             onClick={onGoToLogin}
@@ -110,4 +164,3 @@ export default function SignUpModal({ open, onClose, onGoToLogin }) {
     document.body
   );
 }
-

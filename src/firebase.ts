@@ -2,19 +2,16 @@ import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  apiKey: "AIzaSyDevZJ91ngfHfVC5e-mSIgGOiIrJEuvX88",
+  authDomain: "fir-practice-e31ad.firebaseapp.com",
+  projectId: "fir-practice-e31ad",
+  storageBucket: "fir-practice-e31ad.firebasestorage.app",
+  messagingSenderId: "216794425679",
+  appId: "1:216794425679:web:445fd4c45d2a6b8800fd3a",
+  measurementId: "G-569GXW593K"
 };
 
 const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
-
 export const googleProvider = new GoogleAuthProvider();
-googleProvider.setCustomParameters({
-  prompt: "select_account",
-});

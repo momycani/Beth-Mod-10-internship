@@ -1,5 +1,7 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FiHome, FiBookmark, FiSearch, FiSettings, FiHelpCircle, FiLogOut } from "react-icons/fi";
 import { RiBallPenLine, RiFontSize } from "react-icons/ri";
 
@@ -25,6 +27,21 @@ export default function Sidebar({
       ? (saved as FontSize)
       : 16;
   });
+
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+  try {
+    await signOut(auth);
+
+    navigate("/", {
+      state: { successMessage: "Logout successful!" },
+    });
+
+  } catch (err) {
+    console.error("Logout failed:", err);
+  }
+};
 
   React.useEffect(() => {
     localStorage.setItem("playerFontSize", String(fontSize));
@@ -61,7 +78,7 @@ export default function Sidebar({
 
         {/* Top Navigation */}
         <div className="sidebar__top">
-          <NavLink to="/for-you" className="sidebar__item">
+          <NavLink to="/foryou" className="sidebar__item">
             <FiHome size={18} />
             <span>For you</span>
           </NavLink>
@@ -115,10 +132,10 @@ export default function Sidebar({
             <span>Help & Support</span>
           </NavLink>
 
-          <div className="sidebar__item">
+          <button type="button" onClick={handleLogout} className="sidebar__item">
             <FiLogOut size={18} />
             <span>Logout</span>
-          </div>
+          </button>
         </div>
       </aside>
     </>

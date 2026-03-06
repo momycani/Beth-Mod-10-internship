@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { onAuthStateChanged, User } from "firebase/auth";
+import { auth } from "./firebase";
 
 import "./styles/style.css"
 import Home from "./pages/Home";
@@ -14,6 +16,22 @@ import SignUpModal from "./components/home/SignUpModal.jsx";
 import Layout from "./components/layout/Layout";
 import Search from './pages/Search';
 
+function GuestProtectedRoute({ children }: { children: JSX.Element }) {
+  const isGuest = localStorage.getItem("isGuest") === "true";
+
+  if (isGuest) {
+    return (
+      <Navigate
+        to="/foryou"
+        replace
+        state={{ successMessage: "Please log in or sign up to read or listen to books." }}
+      />
+    );
+  }
+
+  return children;
+}
+
 export default function App() {
   const [loginOpen, setLoginOpen] = useState(false);
   const [signUpOpen, setSignUpOpen] = useState(false);
@@ -24,15 +42,25 @@ export default function App() {
   const closeLogin = () => setLoginOpen(false);
   const closeSignUp = () => setSignUpOpen(false);
 
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    setUser(currentUser);
+  });
+
+  return unsubscribe;
+}, []);
+
   return ( 
     <>   
     <Routes>
       <Route path="/" element={<Home onLoginClick={openLogin} />} />     
       <Route element={<Layout />}>   
-        <Route path="/for-you" element={<ForYou />} />
+        <Route path="/foryou" element={<ForYou />} />
         <Route path="/search" element={<Search />} />
-        <Route path="/book/:id" element={<Book />} />
-        <Route path="/player/:id" element={<Player />} />
+        <Route path="/book/:id" element={<Book onRequireLogin={openLogin} />} />
+        <Route path="/player/:id" element={<Player onRequireLogin={openLogin} />} />
         <Route path="/choose-plan" element={<ChoosePlan />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/library" element={<Library />} />

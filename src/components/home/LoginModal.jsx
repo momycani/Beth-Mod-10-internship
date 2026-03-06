@@ -25,7 +25,14 @@ export default function LoginModal({ open, onClose, onOpenSignUp }) {
   try {
     setLoading(true);
     await signInWithEmailAndPassword(auth, email.trim(), password);
+    localStorage.removeItem("isGuest");
+    const redirectTo = getRedirectPath();
     onClose();
+
+    navigate(redirectTo, {
+      state: { successMessage: "Login successful!" },
+    });
+
   } catch (err) {
     // Firebase error codes -> friendly message
     const code = err?.code || "";
@@ -60,25 +67,57 @@ export default function LoginModal({ open, onClose, onOpenSignUp }) {
   const [resetOpen, setResetOpen] = useState(false);
 
   const handleGuestLogin = () => {
-  onClose();          // close the modal
-  navigate("/for-you");  // go to ForYou page
+  localStorage.setItem("isGuest", "true");
+  onClose();
+
+  navigate("/foryou", {
+    state: { successMessage: "Signed in as Guest!" },
+  });
 };
 
   if (!open) return null;
 
   const handleGoogleLogin = async () => {
-  console.log("Google login clicked"); // <-- quick sanity check
-
+  
   try {
     const result = await signInWithPopup(auth, googleProvider);
-    console.log("Signed in user:", result.user);
-    onClose();
+    localStorage.removeItem("isGuest");
+    const redirectTo = getRedirectPath();
+     onClose();
+
+    navigate("/foryou", {
+      state: { successMessage: "Login successful!" },
+    });
+
   } catch (err) {
     console.error("Google sign-in error:", err);
     alert(err?.message ?? "Google sign-in failed"); // temporary
   }
   }; 
+    
+  const handleDemoLogin = async () => {
+     try {
+      localStorage.setItem("isGuest", "true");
+      await signInWithEmailAndPassword(auth, "demo@gmail.com", "Demo123*");
+      onClose();
 
+      navigate("/foryou", {
+        state: { successMessage: "Signed in as Guest!" },
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const getRedirectPath = () => {
+  const savedPath = localStorage.getItem("postAuthRedirect");
+    if (savedPath) {
+      localStorage.removeItem("postAuthRedirect");
+      return savedPath;
+    }
+    return "/foryou";
+  };
+  
   return createPortal(
     <div className="modalOverlay" onMouseDown={onClose}>
       <div className="modalCard w-full max-w-md" onMouseDown={(e) => {
@@ -98,7 +137,7 @@ export default function LoginModal({ open, onClose, onOpenSignUp }) {
           </div>
         )}
 
-        <button onClick={handleGuestLogin} className="relative flex items-center justify-center w-full h-12 rounded-lg bg-blue-800 text-white hover:bg-blue-900 transition">
+        <button type="button" onClick={handleGuestLogin} className="relative flex items-center justify-center w-full h-12 rounded-lg bg-blue-800 text-white hover:bg-blue-900 transition">
           <FaUser className="absolute left-4 text-lg" />
           <span className="font-medium">
             Login as Guest
@@ -109,7 +148,7 @@ export default function LoginModal({ open, onClose, onOpenSignUp }) {
           <span className="dividerText">or</span>
           <span className="dividerLine" />
         </div>
-        <button onClick={handleGoogleLogin} className="relative flex items-center justify-center w-full h-12 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition">            
+        <button type="button" onClick={handleGoogleLogin} className="relative flex items-center justify-center w-full h-12 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition">            
           <span className="absolute left-3 bg-white w-8 h-8 flex items-center justify-center rounded">
             <FcGoogle className="text-lg" />
           </span>          
@@ -122,7 +161,7 @@ export default function LoginModal({ open, onClose, onOpenSignUp }) {
           <span className="dividerText">or</span>
           <span className="dividerLine" />
         </div>
-        <input className="modalInput" placeholder="Email Address" value={email} onChange={(e) => {
+        <input className="modalInput" type="email" placeholder="Email Address" value={email} onChange={(e) => {
             setEmail(e.target.value);
             if (error) setError("");
           }}
@@ -137,7 +176,11 @@ export default function LoginModal({ open, onClose, onOpenSignUp }) {
           {loading ? "Logging in..." : "Login"}
         </button>
 
-        <button onClick={() => setResetOpen(true)}
+        <button onClick={handleDemoLogin} className="modalPrimaryBtn">
+          Demo Login
+        </button>
+
+        <button type="button" onClick={() => setResetOpen(true)}
           className="mt-6 text-sm font-light text-blue-400 hover:text-blue-500 transition text-center w-full">
           Forgot your password?
         </button>
