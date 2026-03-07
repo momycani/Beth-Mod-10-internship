@@ -5,6 +5,7 @@ import BookSkeleton from "../components/skeletons/BookSkeleton";
 import { FiStar, FiClock, FiMic } from "react-icons/fi";
 import { HiOutlineLightBulb } from "react-icons/hi";
 import { RiBookOpenLine, RiHeadphoneLine, RiBookmarkLine } from "react-icons/ri";
+import { auth } from "../firebase";
 
 const BOOK_URL = "https://us-central1-summaristt.cloudfunctions.net/getBook";
 
@@ -43,11 +44,28 @@ export default function Book({
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
   const [error, setError] = useState("");
   const isGuest = localStorage.getItem("isGuest") === "true";
+  
+  const currentUser = auth.currentUser;
+  const isPremium = currentUser
+    ? localStorage.getItem(`isPremium:${currentUser.uid}`) === "true"
+    : false;
 
   const handleOpenPlayer = () => {
+ 
+ 
   if (isGuest) {
     localStorage.setItem("postAuthRedirect", `/player/${id}`);
     onRequireLogin();
+    return;
+  }
+
+  if (book?.subscriptionRequired && !isPremium) {
+    navigate("/choose-plan", {
+      state: {
+        from: `/player/${id}`,
+        bookId: id,
+      },
+    });
     return;
   }
 

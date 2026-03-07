@@ -34,15 +34,22 @@ export default function LoginModal({ open, onClose, onOpenSignUp }) {
     });
 
   } catch (err) {
-    // Firebase error codes -> friendly message
-    const code = err?.code || "";
-    if (code === "auth/user-not-found") setError("No account found for that email.");
-    else if (code === "auth/wrong-password") setError("Incorrect password.");
-    else if (code === "auth/invalid-email") setError("Please enter a valid email address.");
-    else setError(err?.message || "Login failed. Please try again.");
-  } finally {
-    setLoading(false);
+  const code = err?.code || "";
+
+  if (code === "auth/user-not-found") {
+    setError("No account found for that email.");
+  } else if (code === "auth/wrong-password") {
+    setError("Incorrect password.");
+  } else if (code === "auth/invalid-email") {
+    setError("Please enter a valid email address.");
+  } else if (code === "auth/invalid-credential") {
+    setError("Incorrect email or password.");
+  } else {
+    setError("Login failed. Please try again.");
   }
+} finally {
+  setLoading(false);
+}
 };
   // Close on ESC + lock body scroll
   useEffect(() => {

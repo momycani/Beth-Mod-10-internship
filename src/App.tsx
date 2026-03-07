@@ -14,7 +14,10 @@ import Library from "./pages/Library";
 import LoginModal from "./components/home/LoginModal.jsx";
 import SignUpModal from "./components/home/SignUpModal.jsx";
 import Layout from "./components/layout/Layout";
+import PublicLayout from './components/layout/PublicLayout';
 import Search from './pages/Search';
+import Checkout from './pages/Checkout';
+import MinimalLayout from "./components/layout/MinimalLayout";
 
 function GuestProtectedRoute({ children }: { children: JSX.Element }) {
   const isGuest = localStorage.getItem("isGuest") === "true";
@@ -55,18 +58,28 @@ export default function App() {
   return ( 
     <>   
     <Routes>
-      <Route path="/" element={<Home onLoginClick={openLogin} />} />     
-      <Route element={<Layout />}>   
-        <Route path="/foryou" element={<ForYou />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/book/:id" element={<Book onRequireLogin={openLogin} />} />
-        <Route path="/player/:id" element={<Player onRequireLogin={openLogin} />} />
-        <Route path="/choose-plan" element={<ChoosePlan />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/library" element={<Library />} />
-      </Route>  
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>   
+  {/* pages WITHOUT sidebar, but WITH footer */}
+  <Route element={<PublicLayout />}>
+    <Route path="/" element={<Home onLoginClick={openLogin} />} />
+    <Route path="/choose-plan" element={<ChoosePlan />} />
+  </Route>
+
+  <Route element={<MinimalLayout />}>
+    <Route path="/checkout" element={<Checkout />} />
+  </Route>
+
+  {/* pages WITH sidebar */}
+  <Route element={<Layout />}>
+    <Route path="/foryou" element={<ForYou />} />
+    <Route path="/search" element={<Search />} />
+    <Route path="/book/:id" element={<Book onRequireLogin={openLogin} />} />
+    <Route path="/player/:id" element={<Player onRequireLogin={openLogin} />} />
+    <Route path="/settings" element={<Settings />} />
+    <Route path="/library" element={<Library />} />
+  </Route>
+
+  <Route path="*" element={<Navigate to="/" replace />} />
+</Routes>
     
     <LoginModal open={loginOpen} onClose={closeLogin} onOpenSignUp={openSignUp} />
     <SignUpModal open={signUpOpen} onClose={closeSignUp} onGoToLogin={openLogin} />

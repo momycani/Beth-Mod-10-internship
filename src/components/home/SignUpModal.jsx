@@ -60,6 +60,14 @@ export default function SignUpModal({ open, onClose, onGoToLogin }) {
     }
   };
 
+  const passwordRules = {
+  length: password.length >= 6,
+  uppercase: /[A-Z]/.test(password),
+  lowercase: /[a-z]/.test(password),
+  number: /\d/.test(password),
+  special: /[^A-Za-z\d]/.test(password),
+};
+
   const handleEmailSignup = async () => {
     if (!email.trim() || !password) {
     setError("Please enter your email and password.");
@@ -73,6 +81,18 @@ export default function SignUpModal({ open, onClose, onGoToLogin }) {
       localStorage.removeItem("isGuest");
       const redirectTo = getRedirectPath();
       onClose();
+
+      if (
+        !passwordRules.length ||
+        !passwordRules.uppercase ||
+        !passwordRules.lowercase ||
+        !passwordRules.number ||
+        !passwordRules.special
+      ) {
+        setError("Please meet all password requirements.");
+        return;
+      }
+
 
       navigate("/foryou", {
         state: { successMessage: "Signup successful!" },
@@ -139,6 +159,24 @@ export default function SignUpModal({ open, onClose, onGoToLogin }) {
           onChange={(e) => setPassword(e.target.value)}
           disabled={loading}
         />
+
+        <ul className="password-rules">
+          <li className={passwordRules.length ? "valid" : ""}>
+            Minimum 6 characters
+          </li>
+          <li className={passwordRules.uppercase ? "valid" : ""}>
+            1 uppercase letter
+          </li>
+          <li className={passwordRules.lowercase ? "valid" : ""}>
+            1 lowercase letter
+          </li>
+          <li className={passwordRules.number ? "valid" : ""}>
+            1 number
+          </li>
+          <li className={passwordRules.special ? "valid" : ""}>
+            1 special character
+          </li>
+        </ul>
 
         {error && <p className="modalError">{error}</p>}
 

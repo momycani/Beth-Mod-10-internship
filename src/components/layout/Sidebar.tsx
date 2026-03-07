@@ -30,18 +30,18 @@ export default function Sidebar({
 
   const navigate = useNavigate();
 
-  const handleLogout = async () => {
-  try {
+  const handleLogout = async () => {  
     await signOut(auth);
 
-    navigate("/", {
-      state: { successMessage: "Logout successful!" },
-    });
+  localStorage.removeItem("isPremium");
+  localStorage.removeItem("premiumPlan");
+  localStorage.removeItem("postAuthRedirect");
+  localStorage.removeItem("isGuest");
 
-  } catch (err) {
-    console.error("Logout failed:", err);
+  // send user to Home
+  navigate("/", { replace: true });
   }
-};
+
 
   React.useEffect(() => {
     localStorage.setItem("playerFontSize", String(fontSize));
