@@ -1,9 +1,10 @@
 // src/pages/Player.tsx
 import React, { useEffect, useRef, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { RiReplay10Fill, RiPlayFill, RiPauseFill, RiForward10Fill } from "react-icons/ri";
 import "../styles/player.css";
 import PlayerSkeleton from "../components/skeletons/PlayerSkeleton";
+import { auth } from "../firebase";
 
 const BOOK_URL = "https://us-central1-summaristt.cloudfunctions.net/getBook";
 
@@ -22,9 +23,15 @@ export default function Player({
   onRequireLogin: () => void;
 }) {
 
-  const isGuest = localStorage.getItem("isGuest") === "true";
+  const isGuest = localStorage.getItem("isGuest") === "true";  
+  
+  const currentUser = auth.currentUser;
+  const isPremium = currentUser
+    ? localStorage.getItem(`isPremium:${currentUser.uid}`) === "true"
+    : false;
 
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [book, setBook] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -66,13 +73,28 @@ export default function Player({
 }, [book?.audioLink]);
 
   useEffect(() => {
-    if (isGuest) {
-      localStorage.setItem("postAuthRedirect", `/player/${id}`);
-      onRequireLogin();
-    }
-  }, [isGuest, onRequireLogin]);
+  if (!id) return;
 
+  if (isGuest) {
+    localStorage.setItem("postAuthRedirect", `/player/${id}`);
+    onRequireLogin();
+  }
+}, [id, isGuest, onRequireLogin]);
 
+useEffect(() => {
+  if (!book || !id) return;
+
+ 
+  if (book.subscriptionRequired && !isPremium) {
+    navigate("/choose-plan", {
+      replace: true,
+      state: {
+        from: `/player/${id}`,
+        bookId: id,
+      },
+    });
+  }
+}, [book, id, isPremium, navigate]);
 
   // play / pause toggling
   const togglePlay = async () => {

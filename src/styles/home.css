@@ -434,6 +434,21 @@
   color: #1558b0;
 }
 
+.password-rules {
+  list-style: none;
+  padding: 8px 0;
+  font-size: 13px;
+  color: #999;
+}
+
+.password-rules li {
+  margin-bottom: 4px;
+}
+
+.password-rules li.valid {
+  color: #16a34a;
+}
+
 /* RESPONSIVE */
 
 /* =========================================================
