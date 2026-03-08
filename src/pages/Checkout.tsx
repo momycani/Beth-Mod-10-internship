@@ -1,10 +1,11 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "../styles/checkout.css";
 import { auth } from "../firebase";
 import { PiStorefront } from "react-icons/pi";
 import { FaCreditCard } from "react-icons/fa6";
 import { FaCcVisa, FaCcMastercard, FaCcAmex } from "react-icons/fa";
+import { onAuthStateChanged } from "firebase/auth";
 
 type Plan = "yearly" | "monthly";
 
@@ -14,6 +15,8 @@ export default function Checkout() {
 
   const plan = (location.state?.plan as Plan) || "yearly";
   const from = location.state?.from || "/foryou";
+
+  const user = auth.currentUser;
 
   const [cardNumber, setCardNumber] = useState("");
   const [expiry, setExpiry] = useState("");
@@ -39,6 +42,16 @@ export default function Checkout() {
       helper: "No trial included",
     };
   }, [plan]);
+
+  const [email, setEmail] = useState("");
+
+    useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+        setEmail(user?.email || "");
+    });
+
+    return unsubscribe;
+    }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -119,7 +132,7 @@ navigate(from, { replace: true });
         <div className="checkout-contactCard">
         <div className="checkout-contactRow">
             <span className="checkout-contactLabel">Email</span>
-            <span className="checkout-contactValue">you@example.com</span>
+            <span className="checkout-contactValue">{email || "No email found"}</span>
         </div>
         </div>
 
