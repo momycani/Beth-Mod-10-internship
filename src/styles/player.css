@@ -47,6 +47,12 @@
   line-height: 1.75;
   color: #16323a;
   text-align: left;
+  max-width: 720px;
+}
+
+.player-summary p {
+  margin-bottom: 16px;
+  line-height: 1.7;
 }
 
 /* PLAYER BAR - fixed on bottom and spans full viewport width */
