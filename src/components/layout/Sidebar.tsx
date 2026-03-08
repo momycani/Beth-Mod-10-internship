@@ -1,11 +1,10 @@
 import React from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, NavLink } from "react-router-dom";
 import { FiHome, FiBookmark, FiSearch, FiSettings, FiHelpCircle, FiLogOut } from "react-icons/fi";
 import { RiBallPenLine, RiFontSize } from "react-icons/ri";
 
-import { NavLink } from "react-router-dom";
 import "../../styles/style.css";
 
 const FONT_SIZES = [14, 16, 18, 20] as const;

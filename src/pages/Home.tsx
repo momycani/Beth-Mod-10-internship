@@ -7,7 +7,7 @@ import { BsStarFill, BsStarHalf } from "react-icons/bs";
 import { BiCrown } from "react-icons/bi";
 import { RiLeafLine } from "react-icons/ri";
 import { FaCheckCircle } from "react-icons/fa";
-import Footer from "../components/layout/Footer";
+
 
 interface HomeProps {
   onLoginClick: () => void;

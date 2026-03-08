@@ -1,30 +1,24 @@
 // src/pages/Player.tsx
 import React, { useEffect, useRef, useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { RiReplay10Fill, RiPlayFill, RiPauseFill, RiForward10Fill } from "react-icons/ri";
 import "../styles/player.css";
 import PlayerSkeleton from "../components/skeletons/PlayerSkeleton";
 import { auth } from "../firebase";
+import { markBookFinished, updateBookProgress, addBookToLibrary } from "../utils/library";
+import { formatDuration } from "../utils/formatDuration";
 
 const BOOK_URL = "https://us-central1-summaristt.cloudfunctions.net/getBook";
 
-function formatTime(seconds: number) {
-  if (!isFinite(seconds)) return "00:00";
-  const m = Math.floor(seconds / 60);
-  const s = Math.floor(seconds % 60);
-  return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
-}
 
-// Player.tsx
 
 export default function Player({
   onRequireLogin,
 }: {
   onRequireLogin: () => void;
 }) {
+  const isGuest = localStorage.getItem("isGuest") === "true";
 
-  const isGuest = localStorage.getItem("isGuest") === "true";  
-  
   const currentUser = auth.currentUser;
   const isPremium = currentUser
     ? localStorage.getItem(`isPremium:${currentUser.uid}`) === "true"
@@ -32,20 +26,21 @@ export default function Player({
 
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+
   const [book, setBook] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // playback state
   const [isPlaying, setIsPlaying] = useState(false);
-  const [current, setCurrent] = useState(0); // seconds
+  const [current, setCurrent] = useState(0);
   const [duration, setDuration] = useState(0);
   const [seeking, setSeeking] = useState(false);
-  
-// fetch book (contains audioLink)
+
   useEffect(() => {
     if (!id) return;
+
     let alive = true;
+
     (async () => {
       setLoading(true);
       try {
@@ -61,45 +56,87 @@ export default function Player({
         if (alive) setLoading(false);
       }
     })();
+
     return () => {
       alive = false;
     };
   }, [id]);
 
   useEffect(() => {
-  setCurrent(0);
-  setDuration(0);
-  setIsPlaying(false);
-}, [book?.audioLink]);
+    setCurrent(0);
+    setDuration(0);
+    setIsPlaying(false);
+  }, [book?.audioLink]);
 
   useEffect(() => {
-  if (!id) return;
+    if (!id) return;
 
-  if (isGuest) {
-    localStorage.setItem("postAuthRedirect", `/player/${id}`);
-    onRequireLogin();
-  }
-}, [id, isGuest, onRequireLogin]);
+    if (isGuest) {
+      localStorage.setItem("postAuthRedirect", `/player/${id}`);
+      onRequireLogin();
+    }
+  }, [id, isGuest, onRequireLogin]);
 
-useEffect(() => {
-  if (!book || !id) return;
+  useEffect(() => {
+    if (!book || !id) return;
 
- 
-  if (book.subscriptionRequired && !isPremium) {
-    navigate("/choose-plan", {
-      replace: true,
-      state: {
-        from: `/player/${id}`,
-        bookId: id,
-      },
-    });
-  }
-}, [book, id, isPremium, navigate]);
+    if (book.subscriptionRequired && !isPremium) {
+      navigate("/choose-plan", {
+        replace: true,
+        state: {
+          from: `/player/${id}`,
+          bookId: id,
+        },
+      });
+    }
+  }, [book, id, isPremium, navigate]);
 
-  // play / pause toggling
+  const handleAudioEnded = async () => {
+    const user = auth.currentUser;
+
+    setIsPlaying(false);
+    setCurrent(0);
+
+    if (!user || !book?.id) return;
+
+    try {
+      await addBookToLibrary(user.uid, {
+        bookId: String(book.id),
+        title: book.title,
+        author: book.author,
+        imageLink: book.imageLink,
+        subscriptionRequired: book.subscriptionRequired,
+      });
+
+      await markBookFinished(user.uid, String(book.id));
+    } catch (err) {
+      console.error("Failed to mark book finished:", err);
+    }
+  };
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio || !book?.id) return;
+
+    const onTimeUpdateProgress = async () => {
+      const user = auth.currentUser;
+      if (!user || !audio.duration) return;
+
+      const progress = Math.round((audio.currentTime / audio.duration) * 100);
+      await updateBookProgress(user.uid, String(book.id), progress);
+    };
+
+    audio.addEventListener("timeupdate", onTimeUpdateProgress);
+
+    return () => {
+      audio.removeEventListener("timeupdate", onTimeUpdateProgress);
+    };
+  }, [book]);
+
   const togglePlay = async () => {
     const audio = audioRef.current;
     if (!audio) return;
+
     try {
       if (isPlaying) {
         audio.pause();
@@ -109,7 +146,6 @@ useEffect(() => {
         setIsPlaying(true);
       }
     } catch (err) {
-      // autoplay blocked or other
       console.error(err);
     }
   };
@@ -117,63 +153,68 @@ useEffect(() => {
   const seekBy = (secs: number) => {
     const audio = audioRef.current;
     if (!audio) return;
-    audio.currentTime = Math.max(0, Math.min((duration || 0), audio.currentTime + secs));
+
+    audio.currentTime = Math.max(
+      0,
+      Math.min(duration || 0, audio.currentTime + secs)
+    );
     setCurrent(audio.currentTime);
   };
 
   const onSeekStart = () => setSeeking(true);
+
   const onSeekEnd = (value: number) => {
     const audio = audioRef.current;
     if (!audio) return;
+
     audio.currentTime = value;
     setCurrent(value);
     setSeeking(false);
   };
 
   if (loading) {
-  return <PlayerSkeleton />;
-}
+    return <PlayerSkeleton />;
+  }
 
   return (
     <div className="player-page">
-      {/* hidden audio element */}
       <audio
         ref={audioRef}
         src={book?.audioLink ?? ""}
         preload="metadata"
         onLoadedMetadata={(e) => {
-    setDuration(e.currentTarget.duration || 0);
-  }}
-  onTimeUpdate={(e) => {
-    if (!seeking) {
-      setCurrent(e.currentTarget.currentTime);
-    }
-  }}
-  onEnded={() => {
-    setIsPlaying(false);
-    setCurrent(0);
-  }}
+          setDuration(e.currentTarget.duration || 0);
+        }}
+        onTimeUpdate={(e) => {
+          if (!seeking) {
+            setCurrent(e.currentTarget.currentTime);
+          }
+        }}
+        onEnded={handleAudioEnded}
       />
 
-      {/* MAIN CONTENT (centered reading column) */}
       <main className="player-main">
         <div className="player-content">
-          <h1 className="player-title">{book?.title ?? (loading ? "Loading..." : "Untitled")}</h1>
+          <h1 className="player-title">
+            {book?.title ?? (loading ? "Loading..." : "Untitled")}
+          </h1>
+
           <div className="player-divider" />
 
           <article className="player-summary">
             {book?.summary ? (
-              <p>{book.summary}</p>
+              book.summary.split(/\n+/).map((paragraph:string, i: number) => (
+                <p key={i}>{paragraph}</p>
+              ))
             ) : loading ? (
               <p>Loading summary…</p>
             ) : (
-              <p>{book?.bookDescription ?? "No summary available."}</p>
+              <p>{book?.summary ?? "No summary available."}</p>
             )}
           </article>
         </div>
       </main>
 
-      {/* BOTTOM FIXED PLAYER BAR */}
       <footer className="player-bar" role="region" aria-label="Audio player">
         <div className="player-bar__left">
           <img
@@ -217,7 +258,7 @@ useEffect(() => {
         </div>
 
         <div className="player-bar__right">
-          <div className="player-time">{formatTime(current)}</div>
+         <div className="player-time">{formatDuration(current)}</div>
 
           <input
             className="player-slider"
@@ -232,8 +273,12 @@ useEffect(() => {
               const val = Number(e.target.value);
               setCurrent(val);
             }}
-            onMouseUp={(e) => onSeekEnd(Number((e.target as HTMLInputElement).value))}
-            onTouchEnd={(e) => onSeekEnd(Number((e.target as HTMLInputElement).value))}
+            onMouseUp={(e) =>
+              onSeekEnd(Number((e.target as HTMLInputElement).value))
+            }
+            onTouchEnd={(e) =>
+              onSeekEnd(Number((e.target as HTMLInputElement).value))
+            }
             aria-label="Seek"
             style={{
               background: `linear-gradient(to right, #ffffff 0%, #ffffff ${
@@ -244,7 +289,7 @@ useEffect(() => {
             }}
           />
 
-          <div className="player-time">{formatTime(duration)}</div>
+         <div className="player-time">{formatDuration(duration || book?.duration)}</div>
         </div>
       </footer>
     </div>

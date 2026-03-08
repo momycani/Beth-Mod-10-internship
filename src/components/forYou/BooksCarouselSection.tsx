@@ -1,8 +1,9 @@
 import React from "react";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { FiStar, FiClock, FiMic } from "react-icons/fi";
+import { FiStar, FiClock } from "react-icons/fi";
 import type { Book } from "../../types/Book";
+import { formatDuration } from "../../utils/formatDuration";
 
 type Props = {
   title: string;
@@ -12,16 +13,7 @@ type Props = {
 
 const BASE = "https://us-central1-summaristt.cloudfunctions.net/getBooks";
 
-function formatAudioLength(x: any) {
-  if (typeof x === "string") return x;
-  if (typeof x === "number") {
-    const total = Math.max(0, Math.floor(x));
-    const m = String(Math.floor(total / 60)).padStart(2, "0");
-    const s = String(total % 60).padStart(2, "0");
-    return `${m}:${s}`;
-  }
-  return "03:24";
-}
+
 
 export default function BooksCarouselSection({ title, subtitle, status }: Props) {
   const [books, setBooks] = useState<Book[]>([]);
@@ -76,8 +68,57 @@ const scrollByOne = (dir: "left" | "right") => {
           ? (data.books as Book[])
           : [];
 
+          
+
+        const normalizedBooks = list.map((book: any) => ({
+          ...book,
+          duration: book.duration ?? book.audioLength ?? book.length ?? "",
+        }));
+
+        const booksWithDetails = await Promise.all(
+          normalizedBooks.map(async (book: any) => {
+            try {
+              const res = await fetch(
+                `https://us-central1-summaristt.cloudfunctions.net/getBook?id=${encodeURIComponent(book.id)}`
+              );
+              const fullBook = await res.json();
+
+              let duration = "";
+
+              if (fullBook.audioLink) {
+                try {
+                  const audio = document.createElement("audio");
+                  audio.src = fullBook.audioLink;
+
+                  await new Promise<void>((resolve) => {
+                    audio.addEventListener("loadedmetadata", () => resolve(), {
+                      once: true,
+                    });
+                  });
+
+                  const total = Math.floor(audio.duration || 0);
+                  const minutes = Math.floor(total / 60);
+                  const seconds = total % 60;
+
+                  duration = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+                } catch {
+                  duration = "";
+                }
+              }
+
+              return {
+                ...book,
+                audioLink: fullBook.audioLink ?? book.audioLink,
+                duration,
+              };
+            } catch {
+              return book;
+            }
+          })
+        );
+
         if (!alive) return;
-        setBooks(list);
+        setBooks(booksWithDetails);
       } catch {
         if (!alive) return;
         setBooks([]);
@@ -117,40 +158,38 @@ const scrollByOne = (dir: "left" | "right") => {
 
           <div ref={scrollerRef} className="fy-carousel__scroller">
             {books.map((b) => (
-  <Link
-    key={b.id}
-    to={`/book/${b.id}`}
-    className="fy-slide"
-    style={{ textDecoration: "none", color: "inherit" }}
-  >
-    <article className="fy-card">
-      <div className="fy-card__coverWrap">
-        {b.subscriptionRequired ? (
-          <div className="fy-card__badge">Premium</div>
-        ) : null}
+              <Link
+                key={b.id}
+                to={`/book/${b.id}`}
+                className="fy-slide"
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                <article className="fy-card">
+                  <div className="fy-card__coverWrap">
+                    {b.subscriptionRequired ? (
+                      <div className="fy-card__badge">Premium</div>
+                    ) : null}
 
-        <img className="fy-card__cover" src={b.imageLink} alt={b.title} />
-      </div>
+                    <img className="fy-card__cover" src={b.imageLink} alt={b.title} />
+                  </div>
 
-      <h3 className="fy-card__title">{b.title}</h3>
-      <div className="fy-card__author">{b.author}</div>
-      <div className="fy-card__desc">{b.subTitle}</div>
+                  <h3 className="fy-card__title">{b.title}</h3>
+                  <div className="fy-card__author">{b.author}</div>
+                  <div className="fy-card__desc">{b.subTitle}</div>
 
-      <div className="fy-card__meta">
-        <span className="fy-meta">
-          <FiClock />
-          <span>
-            {formatAudioLength((b as any).audioLength ?? (b as any).duration)}
-          </span>
-        </span>
-        <span className="fy-meta">
-          <FiStar />
-          <span>{Number(b.averageRating ?? 0).toFixed(1)}</span>
-        </span>
-      </div>
-    </article>
-  </Link>
-))}
+                  <div className="fy-card__meta">
+                    <span className="fy-meta">
+                      <FiClock />
+                      <span>{formatDuration(b.duration)}</span>
+                    </span>
+                    <span className="fy-meta">
+                      <FiStar />
+                      <span>{Number(b.averageRating ?? 0).toFixed(1)}</span>
+                    </span>
+                  </div>
+                </article>
+              </Link>
+            ))}
           </div>
 
           <button
