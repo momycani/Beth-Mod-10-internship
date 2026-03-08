@@ -7,7 +7,7 @@ import { auth, googleProvider } from "../../firebase"; // adjust path if needed
 import { useNavigate } from "react-router-dom";
 import ResetPasswordModal from "./ResetPasswordModal";
 
-export default function LoginModal({ open, onClose, onOpenSignUp }) {
+export default function LoginModal({ open, onClose, onOpenSignUp, onLoginSuccess, }) {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,30 +26,25 @@ export default function LoginModal({ open, onClose, onOpenSignUp }) {
     setLoading(true);
     await signInWithEmailAndPassword(auth, email.trim(), password);
     localStorage.removeItem("isGuest");
-    const redirectTo = getRedirectPath();
     onClose();
-
-    navigate(redirectTo, {
-      state: { successMessage: "Login successful!" },
-    });
-
+    onLoginSuccess?.();
   } catch (err) {
-  const code = err?.code || "";
+    const code = err?.code || "";
 
-  if (code === "auth/user-not-found") {
-    setError("No account found for that email.");
-  } else if (code === "auth/wrong-password") {
-    setError("Incorrect password.");
-  } else if (code === "auth/invalid-email") {
-    setError("Please enter a valid email address.");
-  } else if (code === "auth/invalid-credential") {
-    setError("Incorrect email or password.");
-  } else {
-    setError("Login failed. Please try again.");
+    if (code === "auth/user-not-found") {
+      setError("No account found for that email.");
+    } else if (code === "auth/wrong-password") {
+      setError("Incorrect password.");
+    } else if (code === "auth/invalid-email") {
+      setError("Please enter a valid email address.");
+    } else if (code === "auth/invalid-credential") {
+      setError("Incorrect email or password.");
+    } else {
+      setError("Login failed. Please try again.");
+    }
+  } finally {
+    setLoading(false);
   }
-} finally {
-  setLoading(false);
-}
 };
   // Close on ESC + lock body scroll
   useEffect(() => {
@@ -84,23 +79,20 @@ export default function LoginModal({ open, onClose, onOpenSignUp }) {
 
   if (!open) return null;
 
-  const handleGoogleLogin = async () => {
-  
-  try {
-    const result = await signInWithPopup(auth, googleProvider);
-    localStorage.removeItem("isGuest");
-    const redirectTo = getRedirectPath();
-     onClose();
-
-    navigate("/foryou", {
-      state: { successMessage: "Login successful!" },
-    });
-
-  } catch (err) {
-    console.error("Google sign-in error:", err);
-    alert(err?.message ?? "Google sign-in failed"); // temporary
-  }
-  }; 
+    const handleGoogleLogin = async () => {
+      try {
+        setLoading(true);
+        await signInWithPopup(auth, googleProvider);
+        localStorage.removeItem("isGuest");
+        onClose();
+        onLoginSuccess?.();
+      } catch (err) {
+        console.error("Google sign-in error:", err);
+        setError(err?.message ?? "Google sign-in failed");
+      } finally {
+        setLoading(false);
+      }
+    };
     
   const handleDemoLogin = async () => {
      try {
@@ -116,14 +108,7 @@ export default function LoginModal({ open, onClose, onOpenSignUp }) {
     }
   };
 
-  const getRedirectPath = () => {
-  const savedPath = localStorage.getItem("postAuthRedirect");
-    if (savedPath) {
-      localStorage.removeItem("postAuthRedirect");
-      return savedPath;
-    }
-    return "/foryou";
-  };
+  
   
   return createPortal(
     <div className="modalOverlay" onMouseDown={onClose}>
