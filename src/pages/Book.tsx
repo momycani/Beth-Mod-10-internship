@@ -137,7 +137,6 @@ export default function Book({
   };
 }, [book?.audioLink]);
 
-
   useEffect(() => {
     const checkSaved = async () => {
       const user = auth.currentUser;
@@ -249,8 +248,7 @@ export default function Book({
   const type = book.type ?? "";
   const imageLink = book.imageLink ?? "";
   const tags = book.tags ?? [];
-  const description = book.bookDescription ?? "";
-  
+  const description = book.bookDescription ?? "";  
 
   return (
     <div id="wrapper">

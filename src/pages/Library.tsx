@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { FiStar, FiClock } from "react-icons/fi";
 import "../styles/library.css";
 import { formatDuration } from "../utils/formatDuration";
+import LibrarySkeleton from "../components/skeletons/LibrarySkeleton";
 
 type LibraryBook = {
   bookId: string;
@@ -91,9 +92,8 @@ export default function Library() {
   const finishedBooks = books.filter((book) => book.isFinished);
 
   if (loading) {
-    return <div className="library-page">Loading...</div>;
-  }
-
+  return <LibrarySkeleton count={4} />;
+}
   return (
     <div className="library-page">
       <section className="library-section">
@@ -164,7 +164,6 @@ export default function Library() {
                     {book.averageRating ?? 0}
                   </span>
                 </div>
-
               </Link>
             ))}
           </div>

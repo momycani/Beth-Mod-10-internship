@@ -4,7 +4,7 @@ import "../../styles/player.css";
 export default function PlayerSkeleton() {
   return (
     <div className="player-page">
-      {/* MAIN CONTENT */}
+      
       <main className="player-main">
         <div className="player-content">
           <div className="sk sk-title" />
@@ -18,8 +18,7 @@ export default function PlayerSkeleton() {
           </article>
         </div>
       </main>
-
-      {/* BOTTOM FIXED PLAYER BAR */}
+      
       <footer className="player-bar" role="region" aria-label="Audio player">
         <div className="player-bar__left">
           <div className="sk sk-cover" />

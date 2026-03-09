@@ -6,7 +6,6 @@ import { FaHandshake, FaFileAlt } from "react-icons/fa";
 import "../styles/chooseplan.css";
 import { auth } from "../firebase";
 
-
 type Plan = "yearly" | "monthly";
 
 type FAQItem = {
@@ -71,7 +70,6 @@ useEffect(() => {
     const triggerTop = trigger.getBoundingClientRect().top;
     const triggerPageTop = window.scrollY + triggerTop;
 
-    // hide sticky CTA once user has scrolled to this point
     const hidePoint = triggerPageTop - window.innerHeight + 140;
 
     setShowStickyCta(window.scrollY < hidePoint);
@@ -97,7 +95,6 @@ useEffect(() => {
           <h1 className="choose-plan-hero__title">
             Get unlimited access to many amazing books to read
           </h1>
-
           <p className="choose-plan-hero__subtitle">
             Turn ordinary moments into amazing learning opportunities
           </p>
@@ -116,7 +113,7 @@ useEffect(() => {
         <div className="choose-plan-benefit">
           <FaFileAlt className="choose-plan-benefit__icon" />
           <p>
-            <strong>Key ideas in few min</strong> with many books to read
+            <strong>Key ideas in a few min</strong> with many books to read
           </p>
         </div>
 
@@ -246,9 +243,7 @@ useEffect(() => {
           </p>
         </div>
       )}
-    </div>
-   
+    </div>   
     </>
-  );
-  
+  );  
 }
