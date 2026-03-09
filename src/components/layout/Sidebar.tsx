@@ -77,22 +77,22 @@ export default function Sidebar({
 
         {/* Top Navigation */}
         <div className="sidebar__top">
-          <NavLink to="/foryou" className="sidebar__item">
+         <NavLink to="/foryou" className="sidebar__item" onClick={onClose}>
             <FiHome size={18} />
             <span>For you</span>
           </NavLink>
 
-          <NavLink to="/library" className="sidebar__item">
+          <NavLink to="/library" className="sidebar__item" onClick={onClose}>
             <FiBookmark size={18} />
             <span>My Library</span>
           </NavLink>
 
-          <NavLink to="/highlights" className="sidebar__item">
+          <NavLink to="/highlights" className="sidebar__item" onClick={onClose}>
             <RiBallPenLine size={18} />
             <span>Highlights</span>
           </NavLink>
 
-          <NavLink to="/search" className="sidebar__item">
+          <NavLink to="/search" className="sidebar__item" onClick={onClose}>
             <FiSearch size={18} />
             <span>Search</span>
           </NavLink>
@@ -121,12 +121,12 @@ export default function Sidebar({
 
         {/* Bottom Section */}
         <div className="sidebar__bottom">
-          <NavLink to="/settings" className="sidebar__item">
+          <NavLink to="/settings" className="sidebar__item" onClick={onClose}>
             <FiSettings size={18} />
             <span>Settings</span>
           </NavLink>
 
-          <NavLink to="/support" className="sidebar__item">
+          <NavLink to="/support" className="sidebar__item" onClick={onClose}>
             <FiHelpCircle size={18} />
             <span>Help & Support</span>
           </NavLink>

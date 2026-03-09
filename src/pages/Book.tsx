@@ -249,6 +249,7 @@ export default function Book({
   const type = book.type ?? "";
   const imageLink = book.imageLink ?? "";
   const tags = book.tags ?? [];
+  const description = book.bookDescription ?? "";
   
 
   return (
@@ -356,7 +357,7 @@ export default function Book({
                 )}
 
                 <div className="book-summary">
-                  {book.summary?.split("\n").map((p, i) => (
+                  {(description || book.summary || "").split("\n").filter(Boolean).map((p, i) => (
                     <p key={i}>{p}</p>
                   ))}
                 </div>
