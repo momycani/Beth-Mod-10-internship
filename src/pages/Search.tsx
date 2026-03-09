@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import "../styles/book.css";
-import { FiStar, FiClock, FiMic } from "react-icons/fi";
+import { FiStar, FiMic } from "react-icons/fi";
 import { HiOutlineLightBulb } from "react-icons/hi";
 import { RiBookOpenLine } from "react-icons/ri";
 import { formatDuration } from "../utils/formatDuration";
+import { TfiTimer } from "react-icons/tfi";
 
 type Book = {
   id?: string;
@@ -107,7 +108,7 @@ function SearchResultCard({ book }: { book: Book }) {
           </div>
 
           <div className="stat">
-            <FiClock className="stat-icon" />
+            <TfiTimer className="stat-icon" />
             <span>{duration}</span>
           </div>
 

@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import "../styles/book.css";
 import BookSkeleton from "../components/skeletons/BookSkeleton";
-import { FiStar, FiClock, FiMic } from "react-icons/fi";
+import { FiStar, FiMic } from "react-icons/fi";
 import { HiOutlineLightBulb } from "react-icons/hi";
 import { RiBookOpenLine, RiHeadphoneLine, RiBookmarkLine, RiBookmarkFill } from "react-icons/ri";
 import { auth } from "../firebase";
 import { addBookToLibrary, removeBookFromLibrary, getLibraryBook } from "../utils/library";
 import { formatDuration } from "../utils/formatDuration";
+import { TfiTimer } from "react-icons/tfi";
 
 const BOOK_URL = "https://us-central1-summaristt.cloudfunctions.net/getBook";
 
@@ -280,7 +281,7 @@ export default function Book({
                   </div>
 
                   <div className="stat">
-                    <FiClock className="stat-icon" />
+                    <TfiTimer className="stat-icon" />
                     <span>{duration}</span>
                   </div>
 

@@ -1,9 +1,10 @@
 import React from "react";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { FiStar, FiClock } from "react-icons/fi";
+import { FiStar } from "react-icons/fi";
 import type { Book } from "../../types/Book";
 import { formatDuration } from "../../utils/formatDuration";
+import { TfiTimer } from "react-icons/tfi";
 
 type Props = {
   title: string;
@@ -173,7 +174,7 @@ const scrollByOne = (dir: "left" | "right") => {
 
                   <div className="fy-card__meta">
                     <span className="fy-meta">
-                      <FiClock />
+                      <TfiTimer />
                       <span>{formatDuration(b.duration)}</span>
                     </span>
                     <span className="fy-meta">

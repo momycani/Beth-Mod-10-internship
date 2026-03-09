@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { auth } from "../firebase";
 import { getUserLibrary } from "../utils/library";
 import { Link } from "react-router-dom";
-import { FiStar, FiClock } from "react-icons/fi";
+import { FiStar } from "react-icons/fi";
 import "../styles/library.css";
 import { formatDuration } from "../utils/formatDuration";
 import LibrarySkeleton from "../components/skeletons/LibrarySkeleton";
+import { TfiTimer } from "react-icons/tfi";
 
 type LibraryBook = {
   bookId: string;
@@ -118,7 +119,7 @@ export default function Library() {
 
                 <div className="library-meta">
                 <span>
-                  <FiClock style={{ marginRight: "4px" }} />
+                  <TfiTimer style={{ marginRight: "4px" }} />
                   {formatDuration(book.duration)}
                 </span>
 
@@ -155,7 +156,7 @@ export default function Library() {
 
                 <div className="library-meta">
                   <span className="library-meta__item">
-                    <FiClock className="library-meta__icon" />
+                    <TfiTimer className="library-meta__icon" />
                     {formatDuration(book.duration)}
                   </span>
 
