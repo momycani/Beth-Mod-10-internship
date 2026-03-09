@@ -178,6 +178,15 @@
   opacity: 0.6;
 }
 
+.search-page .book-layout {
+  align-items: flex-start;
+}
+
+.search-page-results {
+  display: grid;
+  gap: 24px;
+}
+
 /* RESPONSIVENESS */
 
 @media (max-width: 1024px) {
