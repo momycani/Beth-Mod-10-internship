@@ -184,8 +184,7 @@ navigate(from, { replace: true });
             <FaCreditCard className="checkout-cvcIcon" />
             </div>
         </div>
-        </div>
-           
+        </div>           
 
             <label className="checkout-fieldLabel">Cardholder name</label>
             <input

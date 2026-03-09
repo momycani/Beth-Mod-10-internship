@@ -33,19 +33,14 @@ export default function ResetPasswordModal({ open, onClose }) {
 
         <h2 className="modalTitle">Reset your password</h2>
 
-        <input
-          className="modalInput"
-          placeholder="Email address"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <input className="modalInput" placeholder="Email address" value={email} onChange={(e) => setEmail(e.target.value)} />
 
         <button onClick={handleReset} disabled={loading} className="modalPrimaryBtn">
           {loading ? "Sending..." : "Send reset password link"}
         </button>
 
         <button onClick={onClose} className="modalLink">
-          Go to login
+          Go to Log In
         </button>
       </div>
     </div>,

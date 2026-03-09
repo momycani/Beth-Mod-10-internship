@@ -1,4 +1,3 @@
-// src/pages/Player.tsx
 import React, { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { RiReplay10Fill, RiPlayFill, RiPauseFill, RiForward10Fill } from "react-icons/ri";
@@ -9,8 +8,6 @@ import { markBookFinished, updateBookProgress, addBookToLibrary } from "../utils
 import { formatDuration } from "../utils/formatDuration";
 
 const BOOK_URL = "https://us-central1-summaristt.cloudfunctions.net/getBook";
-
-
 
 export default function Player({
   onRequireLogin,

@@ -5,9 +5,8 @@ export type Book = {
   subTitle?: string;
   imageLink?: string;
   audioLink?: string;
-  duration?: string | number;   // ← ADD THIS
-
-  audioLength?: number | string; // ← OPTIONAL but recommended
+  duration?: string | number;   
+  audioLength?: number | string; 
   totalRating?: number;
   averageRating?: number;
   keyIdeas?: number;

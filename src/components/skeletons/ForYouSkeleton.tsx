@@ -3,13 +3,11 @@ import React from "react";
 export default function ForYouSkeleton() {
   return (
     <div className="fy-page">
-      {/* Selected just for you */}
       <section className="selected">
         <h2 className="selected__title">Selected just for you</h2>
         <div className="selected__card selected__card--skeleton" />
       </section>
-
-      {/* Recommended */}
+      
       <section className="fy-carousel">
         <div className="fy-carousel__header">
           <h2 className="fy-carousel__title">Recommended For You</h2>
@@ -22,8 +20,7 @@ export default function ForYouSkeleton() {
           ))}
         </div>
       </section>
-
-      {/* Suggested */}
+      
       <section className="fy-carousel">
         <div className="fy-carousel__header">
           <h2 className="fy-carousel__title">Suggested Books</h2>

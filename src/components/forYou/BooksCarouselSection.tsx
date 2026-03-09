@@ -13,8 +13,6 @@ type Props = {
 
 const BASE = "https://us-central1-summaristt.cloudfunctions.net/getBooks";
 
-
-
 export default function BooksCarouselSection({ title, subtitle, status }: Props) {
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
@@ -66,9 +64,7 @@ const scrollByOne = (dir: "left" | "right") => {
           ? (data as Book[])
           : Array.isArray(data?.books)
           ? (data.books as Book[])
-          : [];
-
-          
+          : [];          
 
         const normalizedBooks = list.map((book: any) => ({
           ...book,
@@ -151,14 +147,12 @@ const scrollByOne = (dir: "left" | "right") => {
             type="button"
             className="fy-carousel__arrow fy-carousel__arrow--left"
             aria-label="Scroll left"
-            onClick={() => scrollByOne("left")}
-          >
-            ‹
+            onClick={() => scrollByOne("left")}>‹
           </button>
 
           <div ref={scrollerRef} className="fy-carousel__scroller">
             {books.map((b) => (
-              <Link
+              <Link 
                 key={b.id}
                 to={`/book/${b.id}`}
                 className="fy-slide"

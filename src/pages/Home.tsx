@@ -2,23 +2,23 @@ import React from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import "../styles/home.css"
+import "../styles/modal.css"
 import { AiFillFileText, AiFillBulb, AiFillAudio } from "react-icons/ai";
 import { BsStarFill, BsStarHalf } from "react-icons/bs";
 import { BiCrown } from "react-icons/bi";
 import { RiLeafLine } from "react-icons/ri";
 import { FaCheckCircle } from "react-icons/fa";
 
-
 interface HomeProps {
   onLoginClick: () => void;
 }
 
-const headingClass =
-  "statistics__heading hover:text-emerald-500 transition-colors duration-300 cursor-pointer";
+const headingClass = "statistics__heading";
 
 export default function Home({ onLoginClick }: HomeProps) { 
   const location = useLocation();
   const navigate = useNavigate();
+  const [activeStat, setActiveStat] = useState(0);
 
   const [successMessage, setSuccessMessage] = useState(
     location.state?.successMessage || ""
@@ -34,6 +34,14 @@ export default function Home({ onLoginClick }: HomeProps) {
 
     return () => clearTimeout(timer);
   }, [location, navigate]);
+
+  useEffect(() => {
+  const interval = setInterval(() => {
+    setActiveStat((prev) => (prev + 1) % 6);
+  }, 1200);
+
+  return () => clearInterval(interval);
+  }, []);  
   
   return (
     <> 
@@ -49,7 +57,7 @@ export default function Home({ onLoginClick }: HomeProps) {
           <img className="nav__img" src="/assets/logo.png" alt="logo" />
         </figure>
         <ul className="nav__list--wrapper">
-          <li className="nav__list nav__list--login" onClick={onLoginClick}>Login</li>
+          <li className="nav__list nav__list--login" onClick={onLoginClick}>Log In</li>
           <li className="nav__list nav__list--mobile">About</li>
           <li className="nav__list nav__list--mobile">Contact</li>
           <li className="nav__list nav__list--mobile">Help</li>
@@ -72,7 +80,7 @@ export default function Home({ onLoginClick }: HomeProps) {
                 <br className="remove--tablet" />
                 and even people who don't like to read.
               </div>
-              <button className="homeBtn home__cta--btn" onClick={onLoginClick}>Login</button>
+              <button className="homeBtn home__cta--btn" onClick={onLoginClick}>Log In</button>
             </div>
             <figure className="landing__image--mask">
               <img src="/assets/landing.png" alt="landing" />
@@ -84,7 +92,7 @@ export default function Home({ onLoginClick }: HomeProps) {
     <section id="features">
       <div className="container">
         <div className="row">
-          <div className="section__title">Understand books in few minutes</div>
+          <div className="section__title">Understand books in a few minutes</div>
           <div className="features__wrapper">
             <div className="features">
               <div className="features__icon">
@@ -116,12 +124,12 @@ export default function Home({ onLoginClick }: HomeProps) {
           </div>
           <div className="statistics__wrapper">
             <div className="statistics__content--header">
-              <div className={headingClass}>Enhance your knowledge</div>
-              <div className={headingClass}>Achieve greater success</div>
-              <div className={headingClass}>Improve your health</div>
-              <div className={headingClass}>Develop better parenting skills</div>
-              <div className={headingClass}>Increase happiness</div>
-              <div className={headingClass}>Be the best version of yourself!</div>
+              <div className={`${headingClass} ${activeStat === 0 ? "statistics__heading--active" : ""}`}>Enhance your knowledge</div>
+              <div className={`${headingClass} ${activeStat === 1 ? "statistics__heading--active" : ""}`}>Achieve greater success</div>
+              <div className={`${headingClass} ${activeStat === 2 ? "statistics__heading--active" : ""}`}>Improve your health</div>
+              <div className={`${headingClass} ${activeStat === 3 ? "statistics__heading--active" : ""}`}>Develop better parenting skills</div>
+              <div className={`${headingClass} ${activeStat === 4 ? "statistics__heading--active" : ""}`}>Increase happiness</div>
+              <div className={`${headingClass} ${activeStat === 5 ? "statistics__heading--active" : ""}`}>Be the best version of yourself!</div>
             </div>
             <div className="statistics__content--details">
               <div className="statistics__data">
@@ -146,9 +154,7 @@ export default function Home({ onLoginClick }: HomeProps) {
             </div>
           </div>
           <div className="statistics__wrapper">
-            <div
-              className="statistics__content--details statistics__content--details-second"
-            >
+            <div className="statistics__content--details statistics__content--details-second">
               <div className="statistics__data">
                 <div className="statistics__data--number">91%</div>
                 <div className="statistics__data--title">
@@ -158,26 +164,24 @@ export default function Home({ onLoginClick }: HomeProps) {
               <div className="statistics__data">
                 <div className="statistics__data--number">94%</div>
                 <div className="statistics__data--title">
-                  of Summarist members have <b>noticed an improvement</b> in
-                  their overall comprehension and retention of information.
+                  of Summarist members have <b>noticed an improvement</b> in their overall comprehension and retention of information.
                 </div>
               </div>
               <div className="statistics__data">
                 <div className="statistics__data--number">88%</div>
                 <div className="statistics__data--title">
-                  of Summarist members <b>feel more informed</b> about current
-                  events and industry trends since using the platform.
+                  of Summarist members <b>feel more informed</b> about current events and industry trends since using the platform.
                 </div>
               </div>
             </div>
             <div
               className="statistics__content--header statistics__content--header-second">
-              <div className={headingClass}>Expand your learning</div>
-              <div className={headingClass}>Accomplish your goals</div>
-              <div className={headingClass}>Strengthen your vitality</div>
-              <div className={headingClass}>Become a better caregiver</div>
-              <div className={headingClass}>Improve your mood</div>
-              <div className={headingClass}>Maximize your abilities</div>
+              <div className={`${headingClass} ${activeStat === 0 ? "statistics__heading--active" : ""}`}>Expand your learning</div>
+              <div className={`${headingClass} ${activeStat === 1 ? "statistics__heading--active" : ""}`}>Accomplish your goals</div>
+              <div className={`${headingClass} ${activeStat === 2 ? "statistics__heading--active" : ""}`}>Strengthen your vitality</div>
+              <div className={`${headingClass} ${activeStat === 3 ? "statistics__heading--active" : ""}`}>Become a better caregiver</div>
+              <div className={`${headingClass} ${activeStat === 4 ? "statistics__heading--active" : ""}`}>Improve your mood</div>
+              <div className={`${headingClass} ${activeStat === 5 ? "statistics__heading--active" : ""}`}>Maximize your abilities</div>
             </div>
           </div>
         </div>
@@ -196,9 +200,7 @@ export default function Home({ onLoginClick }: HomeProps) {
                 </div>
               </div>
               <div className="review__body">
-                This app has been a <b>game-changer</b> for me! It's saved me so
-                much time and effort in reading and comprehending books. Highly
-                recommend it to all book lovers.
+                This app has been a <b>game-changer</b> for me! It's saved me so much time and effort in reading and comprehending books. Highly recommend it to all book lovers.
               </div>
             </div>
             <div className="review">
@@ -209,8 +211,7 @@ export default function Home({ onLoginClick }: HomeProps) {
                 </div>
               </div>
               <div className="review__body">
-                I love this app! It provides
-                <b>concise and accurate summaries</b> of books in a way that is
+                I love this app! It provides <b>concise and accurate summaries</b> of books in a way that is
                 easy to understand. It's also very user-friendly and intuitive.
               </div>
             </div>
@@ -222,9 +223,7 @@ export default function Home({ onLoginClick }: HomeProps) {
                 </div>
               </div>
               <div className="review__body">
-                This app is a great way to get the main takeaways from a book
-                without having to read the entire thing.
-                <b>The summaries are well-written and informative.</b>
+                This app is a great way to get the main takeaways from a book without having to read the entire thing. <b>The summaries are well-written and informative.</b>
                 Definitely worth downloading.
               </div>
             </div>
@@ -236,15 +235,13 @@ export default function Home({ onLoginClick }: HomeProps) {
                 </div>
               </div>
               <div className="review__body">
-                If you're a busy person who
-                <b>loves reading but doesn't have the time</b> to read every
-                book in full, this app is for you! The summaries are thorough
-                and provide a great overview of the book's content.
+                If you're a busy person who <b>loves reading but doesn't have the time</b> to read every
+                book in full, this app is for you! The summaries are thorough and provide a great overview of the book's content.
               </div>
             </div>
           </div>
           <div className="reviews__btn--wrapper">
-            <button className="homeBtn home__cta--btn" onClick={onLoginClick}>Login</button>
+            <button className="homeBtn home__cta--btn" onClick={onLoginClick}>Log In</button>
           </div>
         </div>
       </div>
@@ -283,8 +280,7 @@ export default function Home({ onLoginClick }: HomeProps) {
           </div>
         </div>
       </div>
-    </section>  
-    
+    </section>      
   </>
 );
 }

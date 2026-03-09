@@ -57,8 +57,16 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
   text-align: center;
-  margin: 56px 96px 64px 32px;
-  padding: 0 32px;
+  max-width: 1100px;
+  margin: 56px auto 64px;
+  padding: 0 24px;
+}
+
+.choose-plan-benefits,
+.choose-plan-pricing,
+.choose-plan-faq {
+  padding-left: 24px;
+  padding-right: 24px;
 }
 
 .choose-plan-benefit {
@@ -68,7 +76,7 @@
   gap: 18px;
   font-size: 1rem;
   line-height: 1.5;
-  margin: 0 48px;
+  margin: 0;
 }
 
 .choose-plan-benefit__icon {
@@ -280,80 +288,98 @@
   max-width: 1100px;
 }
 
-@media (max-width: 900px) {
+/* RESPONSIVE */
+
+@media (max-width: 932px) {
   .choose-plan-benefits {
     grid-template-columns: 1fr;
     gap: 36px;
   }
-
   .choose-plan-hero {
     border-bottom-left-radius: 100px;
     border-bottom-right-radius: 100px;
   }
-
   .choose-plan-hero__imageWrap {
     width: min(340px, 90%);
     border-top-left-radius: 120px;
     border-top-right-radius: 120px;
   }
-
   .choose-plan-hero__image {
     height: 280px;
     border-top-left-radius: 100px;
     border-top-right-radius: 100px;
   }
-
   .plan-card {
-    padding: 22px 20px;
+    padding: 24px 32px;
   }
 }
 
 @media (max-width: 640px) {
   .choose-plan-hero {
-    padding-top: 40px;
+    padding: 40px 16px 0;
+    border-bottom-left-radius: 60px;
+    border-bottom-right-radius: 60px;
+    height: auto;
   }
-
   .choose-plan-hero__subtitle {
     font-size: 1rem;
+    margin-bottom: 24px;
   }
-
+  .choose-plan-hero__imageWrap {
+    width: min(300px, 100%);
+    padding: 12px 12px 0;
+    border-top-left-radius: 80px;
+    border-top-right-radius: 80px;
+  }
+  .choose-plan-hero__image {
+    height: 220px;
+    border-top-left-radius: 70px;
+    border-top-right-radius: 70px;
+  }
+  .choose-plan-benefits,
+  .choose-plan-pricing,
+  .choose-plan-faq {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .choose-plan-benefits {
+    margin: 40px auto 48px;
+    gap: 28px;
+  }
+  .choose-plan-benefit {
+    margin: 0;
+  }
   .plan-card {
+    padding: 20px 16px;
     gap: 16px;
   }
-
   .plan-card__price {
     font-size: 1.5rem;
   }
-
+  .plan-card__radio {
+    width: 28px;
+    min-width: 28px;
+    height: 28px;
+  }
   .choose-plan-pricing__cta {
     width: 100%;
     min-width: 0;
   }
-
   .plan-divider__line {
     width: 70px;
   }
-
-  @media (max-width: 640px) {
+  .faq-item__question {
+    font-size: 20px;
+    padding: 22px 0;
+  }
   .choose-plan-sticky {
     padding: 14px 16px 16px;
   }
-
   .choose-plan-sticky__button {
     width: 100%;
     min-width: 0;
   }
-
   .choose-plan-sticky__text {
     font-size: 0.9rem;
   }
 }
-}
-
-
-@media (max-width: 1024px) {}
-@media (max-width: 932px) {}
-@media (max-width: 768px) {}
-@media (max-width: 640px) {}
-@media (max-width: 550px) {}
-@media (max-width: 480px) {}

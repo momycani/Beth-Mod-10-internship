@@ -73,41 +73,41 @@ export default function SelectedForYou() {
       <h2 className="selected__title">Selected just for you</h2>
 
       <Link
-  to={`/book/${book.id}`}
-  className="selected__card"
-  style={{ textDecoration: "none", color: "inherit" }}
->
-  <div className="selected__left">
-    <div className="selected__headline">{book.subTitle}</div>
-  </div>
-
-  <div className="selected__divider" />
-
-  <div className="selected__coverWrap">
-    {cover ? (
-      <img className="selected__cover" src={cover} alt={title} />
-    ) : (
-      <div className="selected__coverFallback" />
-    )}
-  </div>
-
-  <div className="selected__right">
-    <div className="selected__bookTitle">{title}</div>
-    <div className="selected__author">{author}</div>
-
-    <div className="selected__meta">
-      <button
-        className="selected__play"
-        aria-label="Play"
-        type="button"
-        onClick={(e) => e.preventDefault()}   // keeps button from navigating
+        to={`/book/${book.id}`}
+        className="selected__card"
+        style={{ textDecoration: "none", color: "inherit" }}
       >
-        <FaPlay />
-      </button>
-      <div className="selected__time">{duration}</div>
-    </div>
-  </div>
-</Link>
+      <div className="selected__left">
+        <div className="selected__headline">{book.subTitle}</div>
+      </div>
+
+      <div className="selected__divider" />
+
+      <div className="selected__coverWrap">
+        {cover ? (
+          <img className="selected__cover" src={cover} alt={title} />
+        ) : (
+          <div className="selected__coverFallback" />
+        )}
+      </div>
+
+        <div className="selected__right">
+          <div className="selected__bookTitle">{title}</div>
+          <div className="selected__author">{author}</div>
+
+          <div className="selected__meta">
+            <button
+              className="selected__play"
+              aria-label="Play"
+              type="button"
+              onClick={(e) => e.preventDefault()}   
+            >
+              <FaPlay />
+            </button>
+            <div className="selected__time">{duration}</div>
+          </div>
+        </div>
+      </Link>
     </section>
   );
 }

@@ -6,8 +6,7 @@ export default function BookSkeleton() {
     <section className="mt90 sm-mt-0">
       <div className="container">
         <div className="book-layout">
-
-          {/* LEFT SIDE */}
+       
           <div className="book-layout__left">
             <div className="skeleton sk-book-title" />
             <div className="skeleton sk-book-author" />
@@ -32,8 +31,7 @@ export default function BookSkeleton() {
             <div className="skeleton sk-book-paragraph" />
             <div className="skeleton sk-book-paragraph" />
           </div>
-
-          {/* RIGHT SIDE */}
+        
           <div className="book-layout__right">
             <div className="skeleton sk-book-image" />
           </div>

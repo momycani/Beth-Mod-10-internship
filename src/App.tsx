@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "./firebase";
-
 import "./styles/style.css";
 import Home from "./pages/Home";
 import ForYou from "./pages/ForYou";
@@ -18,22 +17,6 @@ import PublicLayout from "./components/layout/PublicLayout";
 import Search from "./pages/Search";
 import Checkout from "./pages/Checkout";
 import MinimalLayout from "./components/layout/MinimalLayout";
-
-function GuestProtectedRoute({ children }: { children: JSX.Element }) {
-  const isGuest = localStorage.getItem("isGuest") === "true";
-
-  if (isGuest) {
-    return (
-      <Navigate
-        to="/foryou"
-        replace
-        state={{ successMessage: "Please log in or sign up to read or listen to books." }}
-      />
-    );
-  }
-
-  return children;
-}
 
 export default function App() {
   const [loginOpen, setLoginOpen] = useState(false);
@@ -73,6 +56,28 @@ export default function App() {
     return unsubscribe;
   }, []);
 
+  function GuestLibraryRoute({
+  children,
+  onRequireLogin,
+}: {
+  children: JSX.Element;
+  onRequireLogin: (redirectPath?: string) => void;
+}) {
+  const isGuest = localStorage.getItem("isGuest") === "true";
+
+  useEffect(() => {
+    if (isGuest) {
+      onRequireLogin("/library");
+    }
+  }, [isGuest, onRequireLogin]);
+
+  if (isGuest) {
+    return <Navigate to="/foryou" replace />;
+  }
+
+  return children;
+}
+
   return (
     <>
       <Routes>
@@ -91,8 +96,10 @@ export default function App() {
           <Route path="/book/:id" element={<Book onRequireLogin={openLogin} />} />
           <Route path="/player/:id" element={<Player onRequireLogin={openLogin} />} />
           <Route path="/settings" element={<Settings onRequireLogin={handleRequireLogin} />} />
-          <Route path="/library" element={<Library />} />
-        </Route>
+          <Route path="/library" element={<GuestLibraryRoute onRequireLogin={handleRequireLogin}>
+              <Library />
+            </GuestLibraryRoute>} />
+          </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
@@ -107,7 +114,6 @@ export default function App() {
           setLoginRedirectPath("/foryou");
         }}
       />
-
       <SignUpModal open={signUpOpen} onClose={closeSignUp} onGoToLogin={openLogin} />
     </>
   );

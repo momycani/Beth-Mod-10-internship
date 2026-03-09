@@ -41,7 +41,6 @@ export default function Sidebar({
   navigate("/", { replace: true });
   }
 
-
   React.useEffect(() => {
     localStorage.setItem("playerFontSize", String(fontSize));
   }, [fontSize]);
@@ -61,21 +60,17 @@ export default function Sidebar({
 
   return (
     <>
-      {/* Overlay (only visible on mobile when open) */}
       <div
         className={`sidebar-overlay ${isOpen ? "open" : ""}`}
-        onClick={onClose}
-      />
+        onClick={onClose} />
 
-      <aside className={`sidebar ${isOpen ? "open" : ""}`}>
-        {/* Logo */}
+      <aside className={`sidebar ${isOpen ? "open" : ""}`}>        
         <div className="sidebar__logo">
           <figure className="sidebar__img--mask">
             <img className="sidebar__img" src="/assets/logo.png" alt="logo" />
           </figure>
         </div>
-
-        {/* Top Navigation */}
+       
         <div className="sidebar__top">
          <NavLink to="/foryou" className="sidebar__item" onClick={onClose}>
             <FiHome size={18} />
@@ -87,17 +82,16 @@ export default function Sidebar({
             <span>My Library</span>
           </NavLink>
 
-          <NavLink to="/highlights" className="sidebar__item" onClick={onClose}>
+          <div className="sidebar__item sidebar__item--disabled">
             <RiBallPenLine size={18} />
             <span>Highlights</span>
-          </NavLink>
+          </div>
 
           <NavLink to="/search" className="sidebar__item" onClick={onClose}>
             <FiSearch size={18} />
             <span>Search</span>
           </NavLink>
-
-          {/* ✅ Player-only font size controls go HERE (inside the sidebar) */}
+         
           {isPlayerPage && (
             <div className="sidebar-font">
               <div className="sidebar-font__controls" role="group" aria-label="Font size">
@@ -118,18 +112,17 @@ export default function Sidebar({
             </div>
           )}
         </div>
-
-        {/* Bottom Section */}
+        
         <div className="sidebar__bottom">
           <NavLink to="/settings" className="sidebar__item" onClick={onClose}>
             <FiSettings size={18} />
             <span>Settings</span>
           </NavLink>
 
-          <NavLink to="/support" className="sidebar__item" onClick={onClose}>
+          <div className="sidebar__item sidebar__item--disabled">
             <FiHelpCircle size={18} />
             <span>Help & Support</span>
-          </NavLink>
+          </div>         
 
           <button type="button" onClick={handleLogout} className="sidebar__item">
             <FiLogOut size={18} />

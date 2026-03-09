@@ -1,7 +1,5 @@
-// src/components/layout/Footer.tsx
 import { Link } from "react-router-dom";
 import "../../styles/style.css";
-
 
 export default function Footer() {
   return (

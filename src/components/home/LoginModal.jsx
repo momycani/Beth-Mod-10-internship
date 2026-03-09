@@ -6,6 +6,7 @@ import { signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
 import { auth, googleProvider } from "../../firebase"; // adjust path if needed
 import { useNavigate } from "react-router-dom";
 import ResetPasswordModal from "./ResetPasswordModal";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 export default function LoginModal({ open, onClose, onOpenSignUp, onLoginSuccess, }) {
 
@@ -13,6 +14,7 @@ export default function LoginModal({ open, onClose, onOpenSignUp, onLoginSuccess
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleEmailLogin = async () => {
   setError("");
@@ -106,9 +108,7 @@ export default function LoginModal({ open, onClose, onOpenSignUp, onLoginSuccess
     } catch (err) {
       console.error(err);
     }
-  };
-
-  
+  };  
   
   return createPortal(
     <div className="modalOverlay" onMouseDown={onClose}>
@@ -145,7 +145,7 @@ export default function LoginModal({ open, onClose, onOpenSignUp, onLoginSuccess
             <FcGoogle className="text-lg" />
           </span>          
           <span className="font-medium">
-            Login with Google
+            Log In with Google
           </span>
         </button>
         <div className="dividerRow">
@@ -156,20 +156,31 @@ export default function LoginModal({ open, onClose, onOpenSignUp, onLoginSuccess
         <input className="modalInput" type="email" placeholder="Email Address" value={email} onChange={(e) => {
             setEmail(e.target.value);
             if (error) setError("");
-          }}
-        />
-        <input className="modalInput" placeholder="Password" type="password" value={password} onChange={(e) => {
-            setPassword(e.target.value);
-            if (error) setError("");
-          }}
-        />        
+          }} />
+        <div className="password-input-wrapper">
+          <input 
+            className="modalInput"
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          <button
+            type="button"
+            className="password-toggle"
+            onClick={() => setShowPassword((prev) => !prev)}
+          >
+            {showPassword ? <FiEyeOff /> : <FiEye />}
+          </button>
+        </div>      
         <button onClick={handleEmailLogin} disabled={loading}
           className="modalPrimaryBtn">
           {loading ? "Logging in..." : "Login"}
         </button>
 
         <button onClick={handleDemoLogin} className="modalPrimaryBtn">
-          Demo Login
+          Demo Log In
         </button>
 
         <button type="button" onClick={() => setResetOpen(true)}
@@ -188,8 +199,7 @@ export default function LoginModal({ open, onClose, onOpenSignUp, onLoginSuccess
       </div>
       <ResetPasswordModal 
        open={resetOpen}
-       onClose={() => setResetOpen(false)}
-      />
+       onClose={() => setResetOpen(false)} />
     </div>,
     document.body
   );

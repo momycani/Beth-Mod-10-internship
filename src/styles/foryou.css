@@ -1,224 +1,4 @@
-/* =========================================================
-   5) APP LAYOUT (Sidebar + Topbar)
-========================================================= */
-.app-layout {
-  display: flex; 
-}
-
-/* main content column */
-.main-area {
-  margin-left: 240px;        /* push content right of sidebar */
-  width: calc(100% - 240px);
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-/* page content */
-.page-content {
-  padding: 24px;
-  min-width: 0;
-  overflow: visible;         /* page scrolls normally */
-}
-
-/* TOP BAR */
-.topbar {
-  height: 72px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding: 0 24px;
-  border-bottom: 1px solid #e6eaef;
-  background: white;
-}
-
-.topbar__row {
-  display: flex;
-  align-items: center; 
-  gap: 12px;
-  width: auto;
-}
-
-/* search grows, hamburger stays right */
-.topbar__search {
-  min-width: 0; /* prevents search from pushing hamburger off-screen */
-  display: flex;
-  align-items: center;
-}
-
-.topbar__input {
-  flex: 1;
-  min-width: 0;
-  width: 100%;          /* ✅ instead of 220px */
-  border: none;
-  outline: none;
-  background: transparent;
-  font-size: 16px;
-  color: #1c2b3a;
-  padding: 0 12px 0 0;  /* small space before icon area */
-}
-
-.topbar__searchBtn {
-  width: 48px;
-  height: 100%;
-  border: none;
-  background: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  border-radius: 0 12px 12px 0;
-  font-size: 22px;      /* ✅ react-icons scale */
-  color: #111;
-  transition: 0.2s;
-}
-
-.topbar__searchBtn:hover{
-  background: #1dbf73;
-  color: #fff;
-}
-
-.search-wrapper {
-  display: flex;
-  align-items: center;
-  background: #f3f6f9;
-  border-radius: 12px;
-  padding-left: 16px;
-  width: 380px;
-  height: 44px;
-  border: 1px solid #dde3ea;
-  padding-right: 0;
-  overflow: hidden;
-}
-
-.search-wrapper:focus-within {
-  border-color: #1dbf73;
-  box-shadow: 0 0 0 2px rgba(29, 191, 115, 0.15);
-}
-
-
-
-.search-divider {
-  width: 1px;
-  height: 60%;
-  background: #d5dbe3;
-}
-
-
-
-.topbar .topbar__search{
-  flex: 0 0 auto;      /* stops it from stretching */
-  width: auto;
-}
-
-/* keep your search pill size */
-.topbar .search-wrapper{
-  width: 420px;
-}
-
-/* SIDEBAR */
-
-/* FIXED SIDEBAR */
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 220px;
-  background: #f4f7fa;
-  padding: 24px 16px;
-  overflow: hidden;
-  z-index: 1000;
-  display: flex;              /* ✅ add */
-  flex-direction: column;     /* ✅ add */
-}
-
-.sidebar__logo {
-  margin-bottom: 40px;
-  font-weight: 600;
-  font-size: 20px;
-}
-
-.sidebar__img--mask {
-  max-width: 170px;
-  margin: 0 auto;
-}
-
-.sidebar__img {
-  width: 100%;
-  height: 100%;
-}
-
-.sidebar__top {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.sidebar__bottom {
-  margin-top: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.sidebar__item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  text-decoration: none;
-  color: #1c2b3a;
-  font-weight: 500;
-  transition: 0.2s;
-}
-
-.sidebar__item:hover {
-  color: #1dbf73;
-}
-
-.sidebar__item.active {
-  color: #1dbf73;
-  font-weight: 600;
-}
-
-.sidebar-font__controls {
-  display: flex;
-  justify-content: center;   /* optional */
-  gap: 20px;                 /* increase this */
-  margin: 16px 0;            /* space above & below */
-}
-
-.sidebar-font__btn {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  opacity: 0.7;
-  padding: 4px 6px;
-  transition: 0.2s ease;
-  border-bottom: 2px solid transparent; /* important */
-}
-
-.sidebar-font__btn:hover {
-  opacity: 1;
-  transform: scale(1.1);
-  border-bottom: 2px solid #22c55e;
-}
-
-.sidebar-font__btn.active {
-  opacity: 1;
-  border-bottom: 2px solid #22c55e;
-}
-
-/* Hamburger hidden by default */
-.hamburger {
-  display: none;
-}
-
-
-
-/* =========================================================
-   FOR YOU PAGE — Selected
-========================================================= */
+/* SELECTED */
 
 .fy-page{
   width: 100%;
@@ -251,7 +31,6 @@
   min-width: 0;  
 }
 
-/* left */
 .selected__left{
   flex: 1;
   max-width: 220px;
@@ -263,7 +42,6 @@
   max-width: 520px;
 }
 
-/* divider */
 .selected__divider{
   width: 1px;
   height: 120px;
@@ -271,7 +49,6 @@
   flex: 0 0 1px;
 }
 
-/* cover */
 .selected__coverWrap{
   flex: 0 0 200px;
   display: flex;
@@ -292,7 +69,6 @@
   border-radius: 4px;
 }
 
-/* right */
 .selected__right{
   flex: 1;
   min-width: 0;
@@ -342,7 +118,8 @@
   border-radius: 8px;
 }
 
-/* FOR YOU – CAROUSEL (react-slick) */
+/* CAROUSEL */
+
 .fy-carousel {
   padding: 24px 24px 10px;
   margin-top: 32px auto 0;
@@ -382,13 +159,11 @@
   height: auto !important;
 }
 
-/* arrows */
 .fy-carousel .slick-prev,
 .fy-carousel .slick-next {
   z-index: 2;
 }
 
-/* skeletons */
 .fy-carousel__skeletonRow {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -401,12 +176,11 @@
   background: rgba(0, 0, 0, 0.06);
 }
 
-/* REAL cards (you currently don't have this) */
 .fy-card {
   display: flex;
   flex-direction: column;
   height: 100%;
-  min-height: 360px;          /* matches skeleton height */
+  min-height: 360px;          
 }
 
 .fy-card__coverWrap {
@@ -417,12 +191,11 @@
 
 .fy-card__cover {
   width: 100%;
-  aspect-ratio: 1 / 1;        /* keeps image area stable */
+  aspect-ratio: 1 / 1;        
   object-fit: cover;
   display: block;
 }
 
-/* Premium badge positioning (optional but helps consistency) */
 .fy-card__badge {
   position: absolute;
   top: 10px;
@@ -436,12 +209,22 @@
   z-index: 2;
 }
 
-/* text spacing (optional) */
-.fy-card__title { margin: 12px 0 4px; font-size: 18px; font-weight: 700; }
-.fy-card__author { font-size: 14px; opacity: 0.75; margin-bottom: 8px; }
-.fy-card__desc { font-size: 14px; line-height: 1.4; opacity: 0.9; }
+.fy-card__title { 
+  margin: 12px 0 4px; 
+  font-size: 18px; 
+  font-weight: 700; 
+}
+.fy-card__author { 
+  font-size: 14px; 
+  opacity: 0.75; 
+  margin-bottom: 8px; 
+}
+.fy-card__desc { 
+  font-size: 14px; 
+  line-height: 1.4; 
+  opacity: 0.9; 
+}
 
-/* meta row */
 .fy-card__meta {
   display: flex;
   gap: 12px;
@@ -458,10 +241,9 @@
   opacity: 0.85;
 }
 
-/* Arrow + scroll carousel (no react-slick) */
 .fy-carousel__wrap {
   position: relative;
-  padding: 0 56px; /* room for arrows */
+  padding: 0 56px; 
 }
 
 .fy-carousel__scroller {
@@ -473,15 +255,15 @@
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   padding: 0 6px;
-  scrollbar-width: none;       /* Firefox */
+  scrollbar-width: none;       
 }
 
 .fy-carousel__scroller::-webkit-scrollbar {
-  display: none;               /* Chrome/Safari */
+  display: none;               
 }
 
 .fy-slide {
-  flex: 0 0 calc((100% - 80px) / 5 + 6px); /* 4 gaps * 20px */;
+  flex: 0 0 calc((100% - 80px) / 5 + 6px); 
   scroll-snap-align: start;
   min-width: 0; 
 }
@@ -503,8 +285,12 @@
   z-index: 10;
 }
 
-.fy-carousel__arrow--left { left: -10px; }
-.fy-carousel__arrow--right { right: -10px; }
+.fy-carousel__arrow--left { 
+  left: -10px; 
+}
+.fy-carousel__arrow--right { 
+  right: -10px; 
+}
 
 .auth-success-banner {
   position: fixed;
@@ -513,15 +299,12 @@
   display: flex;
   align-items: center;
   gap: 10px;
-
   background: #dcfce7;
   color: #166534;
   border: 1px solid #86efac;
-
   padding: 12px 18px;
   border-radius: 10px;
   font-weight: 600;
-
   box-shadow: 0 10px 25px rgba(0,0,0,0.15);
   z-index: 2000;
 }
@@ -546,16 +329,24 @@
   animation: toastSlide 0.3s ease;
 }
 
-/* =========================================================
-   8) RESPONSIVE
-========================================================= */
-@media (max-width: 1024px) {
-  .selected__left { flex-basis: 280px; }
-  .selected__coverWrap { flex-basis: 160px; }
-  .selected__cover { width: 130px; }
-  .selected__card { gap: 20px; }
+/* RESPONSIVE */
 
-  .fy-slide { flex: 0 0 calc((100% - 60px) / 4); } /* 3 gaps */
+@media (max-width: 1024px) {
+  .selected__left { 
+    flex-basis: 280px; 
+  }
+  .selected__coverWrap { 
+    flex-basis: 160px; 
+  }
+  .selected__cover { 
+    width: 130px; 
+  }
+  .selected__card { 
+    gap: 20px; 
+  }
+  .fy-slide { 
+    flex: 0 0 calc((100% - 60px) / 4); 
+  } 
 }
 
 @media (max-width: 932px) {
@@ -563,111 +354,34 @@
     gap: 16px;
     padding: 20px;
   }
-
   .selected__left {
     flex-basis: 240px;
     min-width: 220px;
   }
-
   .selected__headline {
     font-size: 17px;
   }
-
   .selected__coverWrap {
     flex-basis: 140px;
   }
   .selected__cover {
     width: 120px;
   }
-
   .selected__bookTitle {
     font-size: 20px;
   }
-
-  .fy-slide { flex: 0 0 calc((100% - 40px) / 3); } /* 2 gaps */
-  .fy-card__badge { font-size: 10px; padding: 3px 8px; top: 8px; right: 8px; }
+  .fy-slide { 
+    flex: 0 0 calc((100% - 40px) / 3); 
+  } 
+  .fy-card__badge { 
+    font-size: 10px; 
+    padding: 3px 8px; 
+    top: 8px; 
+    right: 8px; 
+  }
 }  
 
 @media (max-width: 768px) {
-  .app-layout {
-    display: block; /* stops two-column layout */
-  }
-
-  .main-area {
-    margin-left: 0;
-    width: 100%;
-  }
-
-  .topbar {
-    padding: 0 16px;         /* optional: nicer on mobile */
-  }
-
-  .topbar__row {
-    padding: 0 12px; /* optional */
-  }
-
-  .topbar .topbar__row{
-    justify-content: space-between;
-  }
-
-  .topbar .topbar__search{
-    flex: 1 1 auto;    /* allow search to grow */
-    min-width: 0;
-  }
-
-  
-
-  .topbar .hamburger{
-    flex: 0 0 auto;
-    margin-left: 12px;
-  }
-
-  .page-content {
-    padding: 16px;           /* optional: reduce padding */
-  }
-
-  .sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 260px;
-    background: white;
-    transform: translateX(-100%);
-    transition: transform 200ms ease;
-    z-index: 1000;
-  }
-
-  .sidebar.open {
-    transform: translateX(0);
-  }
-
-  .sidebar-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.4);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 200ms ease;
-    z-index: 999;
-  }
-   .sidebar-overlay.open {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .hamburger {
-    display: inline-flex;
-    font-size: 22px;
-    cursor: pointer;
-    background: none;
-    border: none;
-    align-items: center;
-    justify-content: center;
-    flex: 0 0 auto;
-    margin-left: auto;
-  }
-
   .selected {
     position: relative;
     left: 50%;
@@ -676,7 +390,6 @@
     padding: 0 24px;
     width: 100vw;
   }
-
   .selected__card{
     display: grid;
     grid-template-columns: 110px 1fr;
@@ -688,16 +401,13 @@
     min-height: 0;
     width: 100%;    
   }
-
   .selected__divider{
     display: none;
   }
-
   .selected__left{
     grid-area: headline;
     width: 100%;
   }
-  /* reset any desktop fixed widths */
   .selected__left,  
   .selected__right{
     flex: none;
@@ -720,25 +430,21 @@
     width: 100%;
     gap: 8px;
   }
-
   .selected__bookTitle{
     font-size: 18px;
     line-height: 1.2;
   }
-
   .selected__meta {
     margin-top: 4px;
   }
   .selected__cover{
     width: 110px;
     height: auto;
-  }
- 
+  } 
   .selected__play{
     width: 40px;
     height: 40px;
   }
-
 }
 
 @media (max-width: 640px) {
@@ -746,59 +452,53 @@
     padding: 20px;
     gap: 16px;
   }
-
   .selected__headline {
     font-size: 16px;
   }
-
   .selected__bookTitle {
     font-size: 20px;
   }
-
   .selected__cover {
     width: 120px;
   }
-
-  .fy-slide { flex: 0 0 calc((100% - 20px) / 2); } /* 1 gap */
+  .fy-slide { 
+    flex: 0 0 calc((100% - 20px) / 2); 
+  } 
 }
+
 @media (max-width: 550px) {
   .selected__cover {
     width: 110px;
   }
-
   .selected__meta {
     gap: 10px;
   }
-
   .selected__play {
     width: 36px;
     height: 36px;
   }
 }
+
 @media (max-width: 480px) {
   .selected__card {
     padding: 16px;
   }
-
   .selected__title {
     font-size: 24px;
   }
-
   .selected__headline {
     font-size: 15px;
   }
-
   .selected__bookTitle {
     font-size: 18px;
   }
-
   .selected__cover {
     width: 100px;
   }
-
   .selected__time {
     font-size: 14px;
   }
-
-  .fy-slide { flex: 0 0 100%; }
+  .fy-slide { 
+    flex: 0 0 100%; 
+  }
 }

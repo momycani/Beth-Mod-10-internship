@@ -13,8 +13,7 @@ export default function TopBar({ onMenuClick, isMenuOpen }: TopBarProps) {
 
   return (
     <div className="topbar">
-      <div className="topbar__row">
-        {/* SEARCH */}
+      <div className="topbar__row">        
         <form className="topbar__search" onSubmit={(e) => {
           e.preventDefault();
           const trimmed = search.trim();
@@ -35,15 +34,13 @@ export default function TopBar({ onMenuClick, isMenuOpen }: TopBarProps) {
           </button>
           </div>
         </form>
-
-        {/* HAMBURGER */}
+       
         <button
           type="button"
           className="hamburger"
           onClick={onMenuClick}
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={isMenuOpen}
-        >
+          aria-expanded={isMenuOpen}>
           {isMenuOpen ? <FaTimes /> : <FaBars />}
         </button>
       </div>
