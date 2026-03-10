@@ -95,6 +95,10 @@ export default function Library() {
   if (loading) {
   return <LibrarySkeleton count={4} />;
 }
+
+const TimerIcon = TfiTimer as React.ElementType;
+const StarIcon = FiStar as React.ElementType;
+
   return (
     <div className="library-page">
       <section className="library-section">
@@ -119,12 +123,12 @@ export default function Library() {
 
                 <div className="library-meta">
                 <span>
-                  <TfiTimer style={{ marginRight: "4px" }} />
+                  <TimerIcon style={{ marginRight: "4px" }} />
                   {formatDuration(book.duration)}
                 </span>
 
                 <span>
-                  <FiStar style={{ marginRight: "4px", color: "#f5b50a" }} />
+                  <StarIcon style={{ marginRight: "4px", color: "#f5b50a" }} />
                   {book.averageRating ?? 0}
                 </span>
               </div>
@@ -156,12 +160,12 @@ export default function Library() {
 
                 <div className="library-meta">
                   <span className="library-meta__item">
-                    <TfiTimer className="library-meta__icon" />
+                    <TimerIcon className="library-meta__icon" />
                     {formatDuration(book.duration)}
                   </span>
 
                   <span className="library-meta__item">
-                    <FiStar className="library-meta__icon library-meta__icon--star" />
+                    <StarIcon className="library-meta__icon library-meta__icon--star" />
                     {book.averageRating ?? 0}
                   </span>
                 </div>

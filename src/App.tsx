@@ -46,7 +46,7 @@ export default function App() {
     setLoginOpen(true);
   };
 
-  const [user, setUser] = useState<User | null>(null);
+  const [, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -97,8 +97,8 @@ export default function App() {
           <Route path="/player/:id" element={<Player onRequireLogin={openLogin} />} />
           <Route path="/settings" element={<Settings onRequireLogin={handleRequireLogin} />} />
           <Route path="/library" element={<GuestLibraryRoute onRequireLogin={handleRequireLogin}>
-              <Library />
-            </GuestLibraryRoute>} />
+            <Library />
+          </GuestLibraryRoute>} />
           </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />

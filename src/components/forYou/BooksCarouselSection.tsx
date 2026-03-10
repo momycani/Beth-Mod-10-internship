@@ -129,6 +129,9 @@ const scrollByOne = (dir: "left" | "right") => {
     };
   }, [status]);
 
+  const TimerIcon = TfiTimer as React.ElementType;
+  const StarIcon = FiStar as React.ElementType;
+
   return (
     <section className="fy-carousel">
       <div className="fy-carousel__header">
@@ -174,11 +177,11 @@ const scrollByOne = (dir: "left" | "right") => {
 
                   <div className="fy-card__meta">
                     <span className="fy-meta">
-                      <TfiTimer />
+                      <TimerIcon />
                       <span>{formatDuration(b.duration)}</span>
                     </span>
                     <span className="fy-meta">
-                      <FiStar />
+                      <StarIcon />
                       <span>{Number(b.averageRating ?? 0).toFixed(1)}</span>
                     </span>
                   </div>

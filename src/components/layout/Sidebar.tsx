@@ -3,7 +3,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import { useLocation, useNavigate, NavLink } from "react-router-dom";
 import { FiHome, FiBookmark, FiSearch, FiSettings, FiHelpCircle, FiLogOut } from "react-icons/fi";
-import { RiBallPenLine, RiFontSize } from "react-icons/ri";
+import { RiBallPenLine } from "react-icons/ri";
 
 import "../../styles/style.css";
 
@@ -58,6 +58,14 @@ export default function Sidebar({
     };
   }, [fontSize, isPlayerPage]);
 
+  const HomeIcon = FiHome as React.ElementType;
+  const BookmarkIcon = FiBookmark as React.ElementType;
+  const SearchIcon = FiSearch as React.ElementType;
+  const SettingsIcon = FiSettings as React.ElementType;
+  const HelpIcon = FiHelpCircle as React.ElementType;
+  const LogoutIcon = FiLogOut as React.ElementType;
+  const PenIcon = RiBallPenLine as React.ElementType;
+
   return (
     <>
       <div
@@ -73,22 +81,22 @@ export default function Sidebar({
        
         <div className="sidebar__top">
          <NavLink to="/foryou" className="sidebar__item" onClick={onClose}>
-            <FiHome size={18} />
+            <HomeIcon size={18} />
             <span>For you</span>
           </NavLink>
 
           <NavLink to="/library" className="sidebar__item" onClick={onClose}>
-            <FiBookmark size={18} />
+            <BookmarkIcon size={18} />
             <span>My Library</span>
           </NavLink>
 
           <div className="sidebar__item sidebar__item--disabled">
-            <RiBallPenLine size={18} />
+            <PenIcon size={18} />
             <span>Highlights</span>
           </div>
 
           <NavLink to="/search" className="sidebar__item" onClick={onClose}>
-            <FiSearch size={18} />
+            <SearchIcon size={18} />
             <span>Search</span>
           </NavLink>
          
@@ -115,17 +123,17 @@ export default function Sidebar({
         
         <div className="sidebar__bottom">
           <NavLink to="/settings" className="sidebar__item" onClick={onClose}>
-            <FiSettings size={18} />
+            <SettingsIcon size={18} />
             <span>Settings</span>
           </NavLink>
 
           <div className="sidebar__item sidebar__item--disabled">
-            <FiHelpCircle size={18} />
+            <HelpIcon size={18} />
             <span>Help & Support</span>
           </div>         
 
           <button type="button" onClick={handleLogout} className="sidebar__item">
-            <FiLogOut size={18} />
+            <LogoutIcon size={18} />
             <span>Logout</span>
           </button>
         </div>

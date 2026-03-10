@@ -1,3 +1,4 @@
+import React from "react";
 import { FaBars, FaTimes, FaSearch } from "react-icons/fa";
 import { useState } from "react";
 import { useNavigate, createSearchParams } from "react-router-dom";
@@ -10,6 +11,10 @@ type TopBarProps = {
 export default function TopBar({ onMenuClick, isMenuOpen }: TopBarProps) {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
+
+  const SearchIcon = FaSearch as React.ElementType;
+  const TimesIcon = FaTimes as React.ElementType;
+  const BarsIcon = FaBars as React.ElementType;
 
   return (
     <div className="topbar">
@@ -30,7 +35,7 @@ export default function TopBar({ onMenuClick, isMenuOpen }: TopBarProps) {
             value={search}
             onChange={(e) => setSearch(e.target.value)} />
           <button className="topbar__searchBtn" type="submit" aria-label="Search">
-            <FaSearch />
+            <SearchIcon />
           </button>
           </div>
         </form>
@@ -41,7 +46,7 @@ export default function TopBar({ onMenuClick, isMenuOpen }: TopBarProps) {
           onClick={onMenuClick}
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           aria-expanded={isMenuOpen}>
-          {isMenuOpen ? <FaTimes /> : <FaBars />}
+          {isMenuOpen ? <TimesIcon /> : <BarsIcon />}
         </button>
       </div>
     </div>

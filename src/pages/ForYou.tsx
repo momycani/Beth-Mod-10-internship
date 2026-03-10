@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import SelectedForYou from "../components/forYou/SelectedForYou";
@@ -11,6 +12,8 @@ export default function ForYou() {
 
   const location = useLocation();
   const navigate = useNavigate();
+
+  const CircleIcon = FaCheckCircle as React.ElementType;
 
   const [successMessage, setSuccessMessage] = useState(
     location.state?.successMessage || ""
@@ -37,7 +40,7 @@ export default function ForYou() {
       <div className="fy-page" style={{ padding: 24 }}>
         {successMessage && (
           <div className="auth-success-banner">
-            <FaCheckCircle className="auth-success-icon" />
+            <CircleIcon className="auth-success-icon" />
             <span>{successMessage}</span>
           </div>
         )}
@@ -45,7 +48,7 @@ export default function ForYou() {
       </div>
     );
   }
-
+  
   return (
     <div className="fy-page" style={{ padding: 24 }}>
       {successMessage && (

@@ -1,3 +1,4 @@
+import React from "react";
 import BooksCarouselSection from "./BooksCarouselSection";
 
 const BASE =

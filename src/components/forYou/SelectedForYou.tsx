@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import { FaPlay } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -68,6 +69,8 @@ export default function SelectedForYou() {
   const cover = book.imageLink ?? "";
   const duration = book.audioLength ?? book.duration ?? "3 mins";
 
+  const PlayIcon = FaPlay as React.ElementType;
+
   return (
     <section className="selected">
       <h2 className="selected__title">Selected just for you</h2>
@@ -102,7 +105,7 @@ export default function SelectedForYou() {
               type="button"
               onClick={(e) => e.preventDefault()}   
             >
-              <FaPlay />
+              <PlayIcon />
             </button>
             <div className="selected__time">{duration}</div>
           </div>

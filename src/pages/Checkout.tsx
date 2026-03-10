@@ -1,3 +1,4 @@
+import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import "../styles/checkout.css";
@@ -15,8 +16,6 @@ export default function Checkout() {
 
   const plan = (location.state?.plan as Plan) || "yearly";
   const from = location.state?.from || "/foryou";
-
-  const user = auth.currentUser;
 
   const [cardNumber, setCardNumber] = useState("");
   const [expiry, setExpiry] = useState("");
@@ -80,6 +79,12 @@ navigate(from, { replace: true });
     navigate(from, { replace: true });
   };
 
+  const CCIcon = FaCreditCard as React.ElementType;
+  const CCVisaIcon = FaCcVisa as React.ElementType;
+  const CCMasterIcon = FaCcMastercard as React.ElementType;
+  const CCAmexIcon = FaCcAmex as React.ElementType;
+  const StoreIcon = PiStorefront as React.ElementType;
+
   return (
     <div className="checkout-page">
        <div className="checkout-left">
@@ -94,7 +99,7 @@ navigate(from, { replace: true });
             <span className="checkout-brandWrap">
             <span className="checkout-brandDefault">
                 <span className="checkout-logoCircle">
-                <PiStorefront className="checkout-logoIcon" />
+                <StoreIcon className="checkout-logoIcon" />
                 </span>
                 <span className="checkout-brandText">Summarist</span>
             </span>
@@ -140,7 +145,7 @@ navigate(from, { replace: true });
 
         <div className="checkout-paymentCard">
         <div className="checkout-paymentMethodRow">
-            <FaCreditCard className="checkout-paymentMethodIcon" />
+            <CCIcon className="checkout-paymentMethodIcon" />
             <span className="checkout-paymentMethodText">Card</span>
         </div>
 
@@ -158,9 +163,9 @@ navigate(from, { replace: true });
             />
 
             <div className="checkout-cardBrands">
-                <FaCcVisa className="card-logo visa" />
-                <FaCcMastercard className="card-logo mastercard" />
-                <FaCcAmex className="card-logo amex" />
+                <CCVisaIcon className="card-logo visa" />
+                <CCMasterIcon className="card-logo mastercard" />
+                <CCAmexIcon className="card-logo amex" />
             </div>
         </div>
 
@@ -181,7 +186,7 @@ navigate(from, { replace: true });
                 value={cvc}
                 onChange={(e) => setCvc(e.target.value)}
             />
-            <FaCreditCard className="checkout-cvcIcon" />
+            <CCIcon className="checkout-cvcIcon" />
             </div>
         </div>
         </div>           
@@ -238,8 +243,8 @@ navigate(from, { replace: true });
             <div className="checkout-powered">
                 <span>Powered by <strong style={{ letterSpacing: "-0.3px" }}>stripe</strong></span>
                 <span className="checkout-powered__divider">|</span>
-                <a href="#">Terms</a>
-                <a href="#">Privacy</a>
+                <a href="https://stripe.com/terms" target="_blank" rel="noreferrer">Terms</a>
+                <a href="https://stripe.com/privacy" target="_blank" rel="noreferrer">Privacy</a>                   
             </div>
             </div>
         </form>

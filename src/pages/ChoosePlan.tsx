@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
@@ -87,6 +88,12 @@ useEffect(() => {
   }
 }, [navigate]);
 
+const FileIcon = FaFileAlt as React.ElementType;
+const HandIcon = FaHandshake as React.ElementType;
+const UpIcon = FiChevronUp as React.ElementType;
+const DownIcon = FiChevronDown as React.ElementType;
+const PlantIcon = PiPottedPlantFill as React.ElementType;
+
   return (
     <>
     <div className="choose-plan-page">
@@ -111,21 +118,21 @@ useEffect(() => {
 
       <section className="choose-plan-benefits container">
         <div className="choose-plan-benefit">
-          <FaFileAlt className="choose-plan-benefit__icon" />
+          <FileIcon className="choose-plan-benefit__icon" />
           <p>
             <strong>Key ideas in a few min</strong> with many books to read
           </p>
         </div>
 
         <div className="choose-plan-benefit">
-          <PiPottedPlantFill className="choose-plan-benefit__icon" />
+          <PlantIcon className="choose-plan-benefit__icon" />
           <p>
             <strong>3 million</strong> people growing with Summarist everyday
           </p>
         </div>
 
         <div className="choose-plan-benefit">
-          <FaHandshake className="choose-plan-benefit__icon" />
+          <HandIcon className="choose-plan-benefit__icon" />
           <p>
             <strong>Precise recommendations</strong> collections curated by
             experts
@@ -220,7 +227,7 @@ useEffect(() => {
                 aria-expanded={isOpen}
               >
                 <span>{item.question}</span>
-                {isOpen ? <FiChevronUp /> : <FiChevronDown />}
+                {isOpen ? <UpIcon /> : <DownIcon />}
               </button>
 
               {isOpen && <div className="faq-item__answer">{item.answer}</div>}

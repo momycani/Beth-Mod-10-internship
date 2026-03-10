@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
@@ -17,7 +18,7 @@ export default function Settings({
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // replace this later with real subscription data from Firestore / backend
+  // can replace this later with real subscription data from Firestore / backend
   const [plan, setPlan] = useState<SubscriptionPlan>("basic");
 
   useEffect(() => {
@@ -58,7 +59,7 @@ export default function Settings({
 
   const handleCancelSubscription = async () => {
     try {
-      // Later this should call your backend to cancel subscription
+      // Later this should call my backend to cancel subscription
       // or redirect them to Stripe Customer Portal.
       alert("You can connect this to Stripe Customer Portal or your cancel flow.");
     } catch (error) {

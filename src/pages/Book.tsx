@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import "../styles/book.css";
@@ -12,7 +13,7 @@ import { TfiTimer } from "react-icons/tfi";
 
 const BOOK_URL = "https://us-central1-summaristt.cloudfunctions.net/getBook";
 
-type Book = {
+type BookData = {
   id?: string;
   title?: string;
   author?: string;
@@ -40,7 +41,7 @@ export default function Book({
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  const [book, setBook] = useState<Book | null>(null);
+  const [book, setBook] = useState<BookData | null>(null);
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
   const [error, setError] = useState("");
   const [isSaved, setIsSaved] = useState(false);
@@ -67,9 +68,7 @@ export default function Book({
       try {
         setStatus("loading");
         setBook(null);
-        setError("");
-
-        const start = Date.now();
+        setError("");       
 
         const res = await fetch(`${BOOK_URL}?id=${encodeURIComponent(safeId)}`, {
           signal: controller.signal,
@@ -251,6 +250,15 @@ export default function Book({
   const tags = book.tags ?? [];
   const description = book.bookDescription ?? "";  
 
+  const TimerIcon = TfiTimer as React.ElementType;
+  const StarIcon = FiStar as React.ElementType;
+  const MicIcon = FiMic as React.ElementType;
+  const BookOpenIcon = RiBookOpenLine as React.ElementType;
+  const HeadphoneIcon = RiHeadphoneLine as React.ElementType;
+  const BookmarkIcon = RiBookmarkLine as React.ElementType;
+  const FillIcon = RiBookmarkFill as React.ElementType;
+  const BulbIcon = HiOutlineLightBulb as React.ElementType;
+
   return (
     <div id="wrapper">
       <div className="no-bottom no-top" id="content">
@@ -274,24 +282,24 @@ export default function Book({
 
                 <div className="book-stats">
                   <div className="stat">
-                    <FiStar className="stat-icon" />
+                    <StarIcon className="stat-icon" />
                     <span>
                       <strong>{avg.toFixed(1)}</strong> ({total} ratings)
                     </span>
                   </div>
 
                   <div className="stat">
-                    <TfiTimer className="stat-icon" />
+                    <TimerIcon className="stat-icon" />
                     <span>{duration}</span>
                   </div>
 
                   <div className="stat">
-                    <FiMic className="stat-icon" />
+                    <MicIcon className="stat-icon" />
                     <span>{type}</span>
                   </div>
 
                   <div className="stat">
-                    <HiOutlineLightBulb size={20} className="stat-icon" />
+                    <BulbIcon size={20} className="stat-icon" />
                     <span>{keyIdeas} Key ideas</span>
                   </div>
                 </div>
@@ -304,7 +312,7 @@ export default function Book({
                     type="button"
                     onClick={handleOpenPlayer}
                   >
-                    <RiBookOpenLine className="book-btn__icon" />
+                    <BookOpenIcon className="book-btn__icon" />
                     <span>Read</span>
                   </button>
 
@@ -313,7 +321,7 @@ export default function Book({
                     type="button"
                     onClick={handleOpenPlayer}
                   >
-                    <RiHeadphoneLine className="book-btn__icon" />
+                    <HeadphoneIcon className="book-btn__icon" />
                     <span>Listen</span>
                   </button>
                 </div>
@@ -326,9 +334,9 @@ export default function Book({
                   aria-label={isSaved ? "Remove from library" : "Add to library"}
                 >
                   {isSaved ? (
-                    <RiBookmarkFill className="book-libraryIcon" />
+                    <FillIcon className="book-libraryIcon" />
                   ) : (
-                    <RiBookmarkLine className="book-libraryIcon" />
+                    <BookmarkIcon className="book-libraryIcon" />
                   )}
                   <span>{isSaved ? "Saved in My Library" : "Add title to My Library"}</span>
                 </button>

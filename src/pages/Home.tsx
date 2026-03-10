@@ -42,12 +42,21 @@ export default function Home({ onLoginClick }: HomeProps) {
 
   return () => clearInterval(interval);
   }, []);  
+
+  const CircleIcon = FaCheckCircle as React.ElementType;
+  const TextIcon = AiFillFileText as React.ElementType;
+  const FBulbIcon = AiFillBulb as React.ElementType;
+  const AudioIcon = AiFillAudio as React.ElementType;
+  const StarFIcon = BsStarFill as React.ElementType;
+  const HalfIcon = BsStarHalf as React.ElementType;
+  const CrownIcon = BiCrown as React.ElementType;
+  const LeafIcon = RiLeafLine as React.ElementType;
   
   return (
     <> 
       {successMessage && (
         <div className="auth-success-banner">
-          <FaCheckCircle className="auth-success-icon" />
+          <CircleIcon className="auth-success-icon" />
           <span>{successMessage}</span>
         </div>
       )} 
@@ -96,7 +105,7 @@ export default function Home({ onLoginClick }: HomeProps) {
           <div className="features__wrapper">
             <div className="features">
               <div className="features__icon">
-                <AiFillFileText />
+                <TextIcon />
               </div>
               <div className="features__title">Read or listen</div>
               <div className="features__sub--title">
@@ -105,7 +114,7 @@ export default function Home({ onLoginClick }: HomeProps) {
             </div>
             <div className="features">
               <div className="features__icon">
-                <AiFillBulb />
+                <FBulbIcon />
               </div>
               <div className="features__title">Find your next read</div>
               <div className="features__sub--title">
@@ -114,7 +123,7 @@ export default function Home({ onLoginClick }: HomeProps) {
             </div>
             <div className="features">
               <div className="features__icon">
-                <AiFillAudio />
+                <AudioIcon />
               </div>
               <div className="features__title">Briefcasts</div>
               <div className="features__sub--title">
@@ -196,7 +205,7 @@ export default function Home({ onLoginClick }: HomeProps) {
               <div className="review__header">
                 <div className="review__name">Hanna M.</div>
                 <div className="review__stars">
-                  <BsStarFill />
+                  <StarFIcon />
                 </div>
               </div>
               <div className="review__body">
@@ -207,7 +216,7 @@ export default function Home({ onLoginClick }: HomeProps) {
               <div className="review__header">
                 <div className="review__name">David B.</div>
                 <div className="review__stars">
-                  <BsStarFill />
+                  <StarFIcon />
                 </div>
               </div>
               <div className="review__body">
@@ -219,7 +228,7 @@ export default function Home({ onLoginClick }: HomeProps) {
               <div className="review__header">
                 <div className="review__name">Nathan S.</div>
                 <div className="review__stars">
-                  <BsStarFill />
+                  <StarFIcon />
                 </div>
               </div>
               <div className="review__body">
@@ -231,7 +240,7 @@ export default function Home({ onLoginClick }: HomeProps) {
               <div className="review__header">
                 <div className="review__name">Ryan R.</div>
                 <div className="review__stars">
-                  <BsStarFill />
+                  <StarFIcon />
                 </div>
               </div>
               <div className="review__body">
@@ -253,15 +262,15 @@ export default function Home({ onLoginClick }: HomeProps) {
           <div className="numbers__wrapper">
             <div className="numbers">
               <div className="numbers__icon">
-                <BiCrown />
+                <CrownIcon />
               </div>
               <div className="numbers__title">3 Million</div>
               <div className="numbers__sub--title">Downloads on all platforms</div>
             </div>
             <div className="numbers">
               <div className="numbers__icon numbers__star--icon">
-                <BsStarFill />
-                <BsStarHalf />
+                <StarFIcon />
+                <HalfIcon />
               </div>
               <div className="numbers__title">4.5 Stars</div>
               <div className="numbers__sub--title">
@@ -270,7 +279,7 @@ export default function Home({ onLoginClick }: HomeProps) {
             </div>
             <div className="numbers">
               <div className="numbers__icon">
-                <RiLeafLine />
+                <LeafIcon />
               </div>
               <div className="numbers__title">97%</div>
               <div className="numbers__sub--title">

@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import "../styles/book.css";
@@ -78,6 +79,12 @@ function SearchResultCard({ book }: { book: Book }) {
   const imageLink = book.imageLink ?? "";
   const description = book.bookDescription ?? "";
 
+  const TimerIcon = TfiTimer as React.ElementType;
+  const StarIcon = FiStar as React.ElementType;
+  const MicIcon = FiMic as React.ElementType;
+  const BulbIcon = HiOutlineLightBulb as React.ElementType;
+  const BookopenIcon = RiBookOpenLine as React.ElementType;
+
   return (
     <div
       className="book-layout"
@@ -101,24 +108,24 @@ function SearchResultCard({ book }: { book: Book }) {
 
         <div className="book-stats">
           <div className="stat">
-            <FiStar className="stat-icon" />
+            <StarIcon className="stat-icon" />
             <span>
               <strong>{avg.toFixed(1)}</strong> ({total} ratings)
             </span>
           </div>
 
           <div className="stat">
-            <TfiTimer className="stat-icon" />
+            <TimerIcon className="stat-icon" />
             <span>{duration}</span>
           </div>
 
           <div className="stat">
-            <FiMic className="stat-icon" />
+            <MicIcon className="stat-icon" />
             <span>{type}</span>
           </div>
 
           <div className="stat">
-            <HiOutlineLightBulb size={20} className="stat-icon" />
+            <BulbIcon size={20} className="stat-icon" />
             <span>{keyIdeas} Key ideas</span>
           </div>
         </div>
@@ -141,7 +148,7 @@ function SearchResultCard({ book }: { book: Book }) {
             className="book-btn book-btn--primary"
             style={{ textDecoration: "none" }}
           >
-            <RiBookOpenLine className="book-btn__icon" />
+            <BookopenIcon className="book-btn__icon" />
             <span>View Book</span>
           </Link>
         </div>

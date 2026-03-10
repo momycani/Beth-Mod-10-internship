@@ -173,6 +173,11 @@ export default function Player({
     return <PlayerSkeleton />;
   }
 
+  const ReplayIcon = RiReplay10Fill as React.ElementType;
+  const PlayFIcon = RiPlayFill as React.ElementType;
+  const PauseIcon = RiPauseFill as React.ElementType;
+  const ForwardIcon = RiForward10Fill as React.ElementType;
+
   return (
     <div className="player-page">
       <audio
@@ -232,7 +237,7 @@ export default function Player({
             onClick={() => seekBy(-10)}
             type="button"
           >
-            <RiReplay10Fill size={28} />
+            <ReplayIcon size={28} />
           </button>
 
           <button
@@ -241,7 +246,7 @@ export default function Player({
             onClick={togglePlay}
             type="button"
           >
-            {isPlaying ? <RiPauseFill size={28} /> : <RiPlayFill size={28} />}
+            {isPlaying ? <PauseIcon size={28} /> : <PlayFIcon size={28} />}
           </button>
 
           <button
@@ -250,7 +255,7 @@ export default function Player({
             onClick={() => seekBy(10)}
             type="button"
           >
-            <RiForward10Fill size={28} />
+            <ForwardIcon size={28} />
           </button>
         </div>
 

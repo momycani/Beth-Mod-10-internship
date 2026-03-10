@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { FcGoogle } from "react-icons/fc";
@@ -32,23 +33,13 @@ export default function SignUpModal({ open, onClose, onGoToLogin }) {
 
   if (!open) return null;
 
-  const getRedirectPath = () => {
-  const savedPath = localStorage.getItem("postAuthRedirect");
-  if (savedPath) {
-    localStorage.removeItem("postAuthRedirect");
-    return savedPath;
-  }
-  return "/foryou";
-};
-
   const handleGoogleSignup = async () => {
     try {
       setLoading(true);
       setError("");
 
       await signInWithPopup(auth, googleProvider);
-      localStorage.removeItem("isGuest");
-      const redirectTo = getRedirectPath();
+      localStorage.removeItem("isGuest");      
       onClose();
 
       navigate("/foryou", {
@@ -80,8 +71,7 @@ export default function SignUpModal({ open, onClose, onGoToLogin }) {
       setError("");
 
       await createUserWithEmailAndPassword(auth, email.trim(), password);
-      localStorage.removeItem("isGuest");
-      const redirectTo = getRedirectPath();
+      localStorage.removeItem("isGuest");      
       onClose();
 
       if (
